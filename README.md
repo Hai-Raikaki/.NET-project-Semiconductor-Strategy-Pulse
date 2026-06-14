@@ -100,7 +100,7 @@ To compute strategic telemetry updates and simulate market behavior, I implement
 ### 2. Population Variance
 * **Mathematical Formula**:
   $$\sigma^2 = \frac{1}{N} \sum_{i=1}^{N} (x_i - \mu)^2$$
-  *Where $(x_i - \mu)^2$ is the squared deviation of each telemetry point from the calculated mean.*
+  *Where $$(x_i - \mu)^2$$ is the squared deviation of each telemetry point from the calculated mean.*
 * **C# Implementation ([MetricService.cs:L91](  /Project1/Services/MetricService.cs#L91))**:
   ```csharp
   double variance = values.Select(v => Math.Pow(v - mean, 2)).Average();
@@ -118,7 +118,7 @@ To compute strategic telemetry updates and simulate market behavior, I implement
 ### 4. Percentage Change Rate
 * **Mathematical Formula**:
   $$\text{Change Rate } (\%) = \frac{\mu_{\text{new}} - \mu_{\text{old}}}{\mu_{\text{old}}} \times 100$$
-  *Where $\mu_{\text{new}}$ is the newly recalculated mean and $\mu_{\text{old}}$ is the previous rolling average stored in the database.*
+  *Where $$\mu_{\text{new}}$$ is the newly recalculated mean and $\mu_{\text{old}}$ is the previous rolling average stored in the database.*
 * **C# Implementation ([MetricService.cs:L116-L120](  /Project1/Services/MetricService.cs#L116-L120))**:
   ```csharp
   double changeRate = 0.0;
@@ -169,7 +169,7 @@ To compute strategic telemetry updates and simulate market behavior, I implement
 * **Mathematical Formula**:
   $$\text{Change} = (\text{Rand}_{[0,1)} \times 0.04) - 0.02$$
   $$\text{Price}_{\text{new}} = \text{Round}\left(\text{Price}_{\text{old}} \times (1 + \text{Change}), 2\right)$$
-  *Where $\text{Rand}_{[0,1)}$ is a pseudo-random floating-point number between 0.0 and 1.0. This generates a random walk fluctuating between $-2\%$ and $+2\%$ on every 2-second tick.*
+  *Where $$\text{Rand}_{[0,1)}$$ is a pseudo-random floating-point number between 0.0 and 1.0. This generates a random walk fluctuating between $-2\%$ and $+2\%$ on every 2-second tick.*
 * **C# Implementation ([MarketDataSimulator.cs:L100-L106](  /Project1/Services/MarketDataSimulator.cs#L100-L106))**:
   ```csharp
   double nvdaChange = (_random.NextDouble() * 0.04) - 0.02;
@@ -179,7 +179,7 @@ To compute strategic telemetry updates and simulate market behavior, I implement
 ### 7. Heartbeat Wave Oscilloscope Canvas (ECG Simulation)
 * **Mathematical Formula**:
   $$y = \sin(x \cdot f + \text{offset}) \cdot A + \text{Spike}(x)$$
-  *Where $f$ is frequency (0.02), $A$ is base amplitude (10), $\text{offset}$ is the phase offset incremented on each draw loop, and $\text{Spike}(x)$ represents the localized pulse trigger modeling a heartbeat.*
+  *Where $$f$$ is frequency (0.02), $A$ is base amplitude (10), $$\text{offset}$$ is the phase offset incremented on each draw loop, and $$\text{Spike}(x)$$ represents the localized pulse trigger modeling a heartbeat.*
 * **JavaScript Implementation ([app.js:L70-L77](  /Project1/wwwroot/app.js#L70-L77))**:
   ```javascript
   let y = Math.sin((x * waveFrequency) + waveOffset) * waveAmplitude;
