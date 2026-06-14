@@ -93,7 +93,7 @@ To compute strategic telemetry updates and simulate market behavior, I implement
   $$\mu = \frac{1}{N} \sum_{i=1}^{N} x_i$$
   *Where
   $`x_i`$
-  represents each raw telemetry point value, and $N$ represents the rolling sample size (up to 500).*
+  represents each raw telemetry point value, and $`N`$ represents the rolling sample size (up to 500).*
 * **C# Implementation ([MetricService.cs:L90](/Services/MetricService.cs#L90))**:
   ```csharp
   double mean = values.Average();
@@ -102,9 +102,7 @@ To compute strategic telemetry updates and simulate market behavior, I implement
 ### 2. Population Variance
 * **Mathematical Formula**:
   $$\sigma^2 = \frac{1}{N} \sum_{i=1}^{N} (x_i - \mu)^2$$
-  *Where
-  $`(x_i - \mu)^2`$
-  is the squared deviation of each telemetry point from the calculated mean.*
+  *Where $`(x_i - \mu)^2`$ is the squared deviation of each telemetry point from the calculated mean.*
 * **C# Implementation ([MetricService.cs:L91](/Services/MetricService.cs#L91))**:
   ```csharp
   double variance = values.Select(v => Math.Pow(v - mean, 2)).Average();
@@ -122,9 +120,7 @@ To compute strategic telemetry updates and simulate market behavior, I implement
 ### 4. Percentage Change Rate
 * **Mathematical Formula**:
   $$\text{Change Rate } (\%) = \frac{\mu_{\text{new}} - \mu_{\text{old}}}{\mu_{\text{old}}} \times 100$$
-  *Where
-  $`\mu_{\text{new}}`$
-  is the newly recalculated mean and $\mu_{\text{old}}$ is the previous rolling average stored in the database.*
+  *Where $`\mu_{\text{new}}`$ is the newly recalculated mean and $`\mu_{\text{old}}`$ is the previous rolling average stored in the database.*
 * **C# Implementation ([MetricService.cs:L116-L120](/Services/MetricService.cs#L116-L120))**:
   ```csharp
   double changeRate = 0.0;
@@ -173,8 +169,8 @@ To compute strategic telemetry updates and simulate market behavior, I implement
 
 ### 6. Stock Price Random Walk (Mock Ticker Simulation)
 * **Mathematical Formula**:
-  $$\text{Change} = (\text{Rand}_{[0,1)} \times 0.04) - 0.02$$
-  $$\text{Price}_{\text{new}} = \text{Round}\left(\text{Price}_{\text{old}} \times (1 + \text{Change}), 2\right)$$
+  $$`\text{Change} = (\text{Rand}_{[0,1)} \times 0.04) - 0.02`$$
+  $$`\text{Price}_{\text{new}} = \text{Round}\left(\text{Price}_{\text{old}} \times (1 + \text{Change}), 2\right)`$$
   *Where
   $`\text{Rand}_{[0,1)}`$
   is a pseudo-random floating-point number between 0.0 and 1.0. This generates a random walk fluctuating between $`-2\%`$ and $`+2\%`$ on every 2-second tick.*
