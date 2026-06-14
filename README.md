@@ -359,7 +359,7 @@ Here is a detailed breakdown of the files I wrote, explaining their specific res
 ## 🚀 How to Run and Verify My Project
 
 ### 1. Prerequisites
-- **PostgreSQL** running locally on port `5432` with username `postgres` and password `0123`.
+- **PostgreSQL** running locally on port (self-select when programming) with username and password.
 - A database named `semiconductor_pulse` created.
 - **.NET SDK 10.0** or newer installed.
 
