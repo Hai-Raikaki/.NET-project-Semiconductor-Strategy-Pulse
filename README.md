@@ -169,8 +169,10 @@ To compute strategic telemetry updates and simulate market behavior, I implement
 
 ### 6. Stock Price Random Walk (Mock Ticker Simulation)
 * **Mathematical Formula**:
-  $$`\text{Change} = (\text{Rand}_{[0,1)} \times 0.04) - 0.02`$$
-  $$`\text{Price}_{\text{new}} = \text{Round}\left(\text{Price}_{\text{old}} \times (1 + \text{Change}), 2\right)`$$
+  $`\text{Change} = (\text{Rand}_{[0,1)} \times 0.04) - 0.02`$
+  
+  $`\text{Price}_{\text{new}} = \text{Round}\left(\text{Price}_{\text{old}} \times (1 + \text{Change}), 2\right)`$
+  
   *Where
   $`\text{Rand}_{[0,1)}`$
   is a pseudo-random floating-point number between 0.0 and 1.0. This generates a random walk fluctuating between $`-2\%`$ and $`+2\%`$ on every 2-second tick.*
