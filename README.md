@@ -91,8 +91,10 @@ To compute strategic telemetry updates and simulate market behavior, I implement
 ### 1. Rolling Mean (Average)
 * **Mathematical Formula**:
   $$\mu = \frac{1}{N} \sum_{i=1}^{N} x_i$$
-  *Where $x_i$ represents each raw telemetry point value, and $N$ represents the rolling sample size (up to 500).*
-* **C# Implementation ([MetricService.cs:L90](  /Project1/Services/MetricService.cs#L90))**:
+  *Where
+  $x_i$
+  represents each raw telemetry point value, and $N$ represents the rolling sample size (up to 500).*
+* **C# Implementation ([MetricService.cs:L90](/Services/MetricService.cs#L90))**:
   ```csharp
   double mean = values.Average();
   ```
@@ -100,8 +102,10 @@ To compute strategic telemetry updates and simulate market behavior, I implement
 ### 2. Population Variance
 * **Mathematical Formula**:
   $$\sigma^2 = \frac{1}{N} \sum_{i=1}^{N} (x_i - \mu)^2$$
-  *Where $$(x_i - \mu)^2$$ is the squared deviation of each telemetry point from the calculated mean.*
-* **C# Implementation ([MetricService.cs:L91](  /Project1/Services/MetricService.cs#L91))**:
+  *Where
+  $$(x_i - \mu)^2$$
+  is the squared deviation of each telemetry point from the calculated mean.*
+* **C# Implementation ([MetricService.cs:L91](/Services/MetricService.cs#L91))**:
   ```csharp
   double variance = values.Select(v => Math.Pow(v - mean, 2)).Average();
   ```
@@ -110,7 +114,7 @@ To compute strategic telemetry updates and simulate market behavior, I implement
 * **Mathematical Formula**:
   $$\sigma = \sqrt{\sigma^2}$$
   *Measuring the volatility and spread of the telemetry points around the rolling mean.*
-* **C# Implementation ([MetricService.cs:L92](  /Project1/Services/MetricService.cs#L92))**:
+* **C# Implementation ([MetricService.cs:L92](/Services/MetricService.cs#L92))**:
   ```csharp
   double stdDev = Math.Sqrt(variance);
   ```
@@ -118,8 +122,10 @@ To compute strategic telemetry updates and simulate market behavior, I implement
 ### 4. Percentage Change Rate
 * **Mathematical Formula**:
   $$\text{Change Rate } (\%) = \frac{\mu_{\text{new}} - \mu_{\text{old}}}{\mu_{\text{old}}} \times 100$$
-  *Where $$\mu_{\text{new}}$$ is the newly recalculated mean and $\mu_{\text{old}}$ is the previous rolling average stored in the database.*
-* **C# Implementation ([MetricService.cs:L116-L120](  /Project1/Services/MetricService.cs#L116-L120))**:
+  *Where
+  $$\mu_{\text{new}}$$
+  is the newly recalculated mean and $\mu_{\text{old}}$ is the previous rolling average stored in the database.*
+* **C# Implementation ([MetricService.cs:L116-L120](/Services/MetricService.cs#L116-L120))**:
   ```csharp
   double changeRate = 0.0;
   if (oldVal != 0.0)
@@ -132,7 +138,7 @@ To compute strategic telemetry updates and simulate market behavior, I implement
 * **Mathematical Formula**:
   $$CV = \frac{\sigma}{|\mu|}$$
   *The ratio of the standard deviation to the mean, representing relative variability.*
-* **C# Implementation & Status Rules ([MetricService.cs:L181-L209](  /Project1/Services/MetricService.cs#L181-L209))**:
+* **C# Implementation & Status Rules ([MetricService.cs:L181-L209](/Services/MetricService.cs#L181-L209))**:
   ```csharp
   private string DeterminePulseStatus(string key, double val, double stdDev, double changeRate)
   {
@@ -169,8 +175,10 @@ To compute strategic telemetry updates and simulate market behavior, I implement
 * **Mathematical Formula**:
   $$\text{Change} = (\text{Rand}_{[0,1)} \times 0.04) - 0.02$$
   $$\text{Price}_{\text{new}} = \text{Round}\left(\text{Price}_{\text{old}} \times (1 + \text{Change}), 2\right)$$
-  *Where $$\text{Rand}_{[0,1)}$$ is a pseudo-random floating-point number between 0.0 and 1.0. This generates a random walk fluctuating between $-2\%$ and $+2\%$ on every 2-second tick.*
-* **C# Implementation ([MarketDataSimulator.cs:L100-L106](  /Project1/Services/MarketDataSimulator.cs#L100-L106))**:
+  *Where
+  $$\text{Rand}_{[0,1)}$$
+  is a pseudo-random floating-point number between 0.0 and 1.0. This generates a random walk fluctuating between $-2\%$ and $+2\%$ on every 2-second tick.*
+* **C# Implementation ([MarketDataSimulator.cs:L100-L106](/Services/MarketDataSimulator.cs#L100-L106))**:
   ```csharp
   double nvdaChange = (_random.NextDouble() * 0.04) - 0.02;
   _nvda = Math.Round(_nvda * (1 + nvdaChange), 2);
@@ -179,8 +187,12 @@ To compute strategic telemetry updates and simulate market behavior, I implement
 ### 7. Heartbeat Wave Oscilloscope Canvas (ECG Simulation)
 * **Mathematical Formula**:
   $$y = \sin(x \cdot f + \text{offset}) \cdot A + \text{Spike}(x)$$
-  *Where $$f$$ is frequency (0.02), $A$ is base amplitude (10), $$\text{offset}$$ is the phase offset incremented on each draw loop, and $$\text{Spike}(x)$$ represents the localized pulse trigger modeling a heartbeat.*
-* **JavaScript Implementation ([app.js:L70-L77](  /Project1/wwwroot/app.js#L70-L77))**:
+  *Where
+  $$f$$
+  is frequency (0.02), $A$ is base amplitude (10),
+  $$\text{offset}$$
+  is the phase offset incremented on each draw loop, and $$\text{Spike}(x)$$ represents the localized pulse trigger modeling a heartbeat.*
+* **JavaScript Implementation ([app.js:L70-L77](/wwwroot/app.js#L70-L77))**:
   ```javascript
   let y = Math.sin((x * waveFrequency) + waveOffset) * waveAmplitude;
   const spike = (x + (waveOffset * 80)) % 240;
@@ -200,26 +212,26 @@ I followed a strict chronological sequence to build this project from an empty d
 * **Step 1: Project Setup & Package Configurations**
   - Scaffolded the project using the .NET Web API template.
   - Installed EF Core packages for PostgreSQL (`Npgsql.EntityFrameworkCore.PostgreSQL`) and ASP.NET Core Identity.
-  - Configured PostgreSQL connection configurations, JWT parameters, and logging paths in [appsettings.json](/Project1/appsettings.json).
+  - Configured PostgreSQL connection configurations, JWT parameters, and logging paths in [appsettings.json](/appsettings.json).
 * **Step 2: Database Schema & Entity Definitions**
   - Configured `AppUser` extending `IdentityUser<Guid>` to override default identity tables with GUID identifiers.
-  - Coded database mapping classes for [RawMarketData.cs](/Project1/Models/RawMarketData.cs) (raw events), [MetricState.cs]( /Project1/Models/MetricState.cs) (recalculated stats), and [RefreshToken.cs]( /Project1/Models/RefreshToken.cs) (session tracking).
+  - Coded database mapping classes for [RawMarketData.cs](/Models/RawMarketData.cs) (raw events), [MetricState.cs](/Models/MetricState.cs) (recalculated stats), and [RefreshToken.cs](/Models/RefreshToken.cs) (session tracking).
 * **Step 3: Database Context & Initial Data Seeding**
   - Inherited `PulseDbContext` from `IdentityDbContext` and mapped my custom entities to tables using Fluent API.
   - Programmed `SeedData.cs` to run automatic migrations and seed default test credentials (`admin@pulse.com` as Admin and `device@pulse.com` as IoTDevice) so the database is ready for testing instantly.
 
 ### 2️⃣ THEN: I Coded the Security & Concurrency Core
 * **Step 4: Secure Cookie-based JWT Middleware**
-  - Programmed [TokenService.cs]( /Project1/Services/TokenService.cs) to handle token configurations.
+  - Programmed [TokenService.cs](/Services/TokenService.cs) to handle token configurations.
   - Configured JWT Bearer options in [Program.cs]( /Project1/Program.cs), adding an event hook to transparently intercept and extract access tokens from incoming browser request cookies.
 * **Step 5: Authorization Controller & Token Rotation**
-  - Created [AuthController.cs]( /Project1/Controllers/AuthController.cs) to process requests.
+  - Created [AuthController.cs](/Controllers/AuthController.cs) to process requests.
   - Wrote login methods that issue JWT access cookies (expires in 15 mins) and refresh cookies (expires in 7 days).
   - Wrote `/refresh-token` logic that implements cryptographically secure refresh token rotation in the database to prevent replay attacks.
 * **Step 6: Thread-Safe Queue & Background Service**
   - Registered the singleton `Channel<RawMarketData>` in DI.
   - Wrote `IngestionService` to post items to the channel.
-  - Coded [BackgroundProcessor.cs]( /Project1/Services/BackgroundProcessor.cs) to pull items from the channel reader and batch-save them under a custom DI lifetime scope.
+  - Coded [BackgroundProcessor.cs](/Services/BackgroundProcessor.cs) to pull items from the channel reader and batch-save them under a custom DI lifetime scope.
 * **Step 7: Recalculation Service**
   - Coded statistical math formulas inside `MetricService.cs` to update standard deviation, sample counts, and percentage differences on every telemetry batch.
 
@@ -300,49 +312,49 @@ E:\.NET PROJECT\PROJECT1
 Here is a detailed breakdown of the files I wrote, explaining their specific responsibilities and how they fit into the system architecture:
 
 ### ⚙️ Root level Configurations
-* **[Program.cs]( /Project1/Program.cs)**: The heart and entry point of my .NET Core application. I configured the dependency injection container, database contexts, Redis, and security policies here. It registers my custom JWT cookie extraction filter and sets up middleware routing pipelines.
-* **[appsettings.json]( /Project1/appsettings.json)**: The centralized configuration file. I stored my PostgreSQL database connection strings, JWT security secrets (issuer, audience, and key), and Serilog logging formats in this file.
-* **[Dockerfile]( /Project1/Dockerfile)**: Defines the multi-stage build configuration to compile and bundle the .NET application into a lightweight runtime Docker image.
-* **[docker-compose.yml]( /Project1/docker-compose.yml)**: Orchestrates my local development microservices. It spins up a PostgreSQL database and a Redis server container instantly, ensuring my dev environment is self-contained.
+* **[Program.cs](/Program.cs)**: The heart and entry point of my .NET Core application. I configured the dependency injection container, database contexts, Redis, and security policies here. It registers my custom JWT cookie extraction filter and sets up middleware routing pipelines.
+* **[appsettings.json](/appsettings.json)**: The centralized configuration file. I stored my PostgreSQL database connection strings, JWT security secrets (issuer, audience, and key), and Serilog logging formats in this file.
+* **[Dockerfile](/Dockerfile)**: Defines the multi-stage build configuration to compile and bundle the .NET application into a lightweight runtime Docker image.
+* **[docker-compose.yml](/docker-compose.yml)**: Orchestrates my local development microservices. It spins up a PostgreSQL database and a Redis server container instantly, ensuring my dev environment is self-contained.
 
 ### ⚡ Caching Services
-* **[Caching/ICacheService.cs]( /Project1/Caching/ICacheService.cs)**: The interface defining caching functions (Get, Set, and Invalidation) to decouple my services from a specific caching library.
-* **[Caching/RedisCacheService.cs]( /Project1/Caching/RedisCacheService.cs)**: Integrates StackExchange.Redis to cache aggregated strategic metrics. If Redis is unavailable, it gracefully handles exceptions and falls back to in-memory caching.
+* **[Caching/ICacheService.cs](/Caching/ICacheService.cs)**: The interface defining caching functions (Get, Set, and Invalidation) to decouple my services from a specific caching library.
+* **[Caching/RedisCacheService.cs](/Caching/RedisCacheService.cs)**: Integrates StackExchange.Redis to cache aggregated strategic metrics. If Redis is unavailable, it gracefully handles exceptions and falls back to in-memory caching.
 
 ### 🎮 Web API Controllers
-* **[Controllers/AuthController.cs]( /Project1/Controllers/AuthController.cs)**: Exposes endpoints for managing user session state. It handles login verification, user registration, logout cookie revocation, and refresh token rotation validations.
-* **[Controllers/PulseController.cs]( /Project1/Controllers/PulseController.cs)**: Implements the telemetry ingestion POST endpoint, which routes raw data straight to the in-memory queue, and the Server-Sent Events (SSE) stream, which maintains open client channels to push updated statistics in real time.
+* **[Controllers/AuthController.cs](/Controllers/AuthController.cs)**: Exposes endpoints for managing user session state. It handles login verification, user registration, logout cookie revocation, and refresh token rotation validations.
+* **[Controllers/PulseController.cs](/Controllers/PulseController.cs)**: Implements the telemetry ingestion POST endpoint, which routes raw data straight to the in-memory queue, and the Server-Sent Events (SSE) stream, which maintains open client channels to push updated statistics in real time.
 
 ### 🗄️ Database & Seeding Logic
-* **[Data/PulseDbContext.cs]( /Project1/Data/PulseDbContext.cs)**: The Entity Framework Core Database Context. It maps C# object entities directly to SQL tables in PostgreSQL and overrides standard ASP.NET Identity tables to use GUID primary keys.
-* **[Data/SeedData.cs]( /Project1/Data/SeedData.cs)**: Automates database provisioning on startup. It runs migrations and seeds security roles and default operator accounts so the project is usable immediately.
+* **[Data/PulseDbContext.cs](/Data/PulseDbContext.cs)**: The Entity Framework Core Database Context. It maps C# object entities directly to SQL tables in PostgreSQL and overrides standard ASP.NET Identity tables to use GUID primary keys.
+* **[Data/SeedData.cs](/Data/SeedData.cs)**: Automates database provisioning on startup. It runs migrations and seeds security roles and default operator accounts so the project is usable immediately.
 
 ### 📦 Data Transfer Objects (DTOs)
-* **[DTOs/AuthDtos.cs]( /Project1/DTOs/AuthDtos.cs)**: Holds the structural request/response records for logins and registrations.
-* **[DTOs/IngestionRequest.cs]( /Project1/DTOs/IngestionRequest.cs)**: Validates input payloads for the telemetry ingestion endpoint, checking key properties like range and structure.
-* **[DTOs/MetricPulseDto.cs]( /Project1/DTOs/MetricPulseDto.cs)**: Formats metrics updates pushed via the Server-Sent Events stream.
+* **[DTOs/AuthDtos.cs](/DTOs/AuthDtos.cs)**: Holds the structural request/response records for logins and registrations.
+* **[DTOs/IngestionRequest.cs](/DTOs/IngestionRequest.cs)**: Validates input payloads for the telemetry ingestion endpoint, checking key properties like range and structure.
+* **[DTOs/MetricPulseDto.cs](/DTOs/MetricPulseDto.cs)**: Formats metrics updates pushed via the Server-Sent Events stream.
 
 ### 🔗 WebSockets & SignalR Hubs
 * **[Hubs/MarketHub.cs]( /Project1/Hubs/MarketHub.cs)**: A SignalR Hub that sets up bidirectional WebSocket endpoints, facilitating instant market price updates streaming to front-end clients.
 
 ### 🧩 Database Domain Models
-* **[Models/AppUser.cs]( /Project1/Models/AppUser.cs)**: Extends standard C# ASP.NET Core Identity users, introducing properties like custom full names, creation timestamps, and active logs.
-* **[Models/MetricState.cs]( /Project1/Models/MetricState.cs)**: The database schema representation for aggregated metrics (rolling averages, standard deviation, change percentages).
-* **[Models/RawMarketData.cs]( /Project1/Models/RawMarketData.cs)**: Defines the schema for logging raw telemetry inputs prior to processing.
-* **[Models/RefreshToken.cs]( /Project1/Models/RefreshToken.cs)**: Establishes the database schema for storing refresh tokens linked to specific users to validate sessions.
+* **[Models/AppUser.cs](/Models/AppUser.cs)**: Extends standard C# ASP.NET Core Identity users, introducing properties like custom full names, creation timestamps, and active logs.
+* **[Models/MetricState.cs](/Models/MetricState.cs)**: The database schema representation for aggregated metrics (rolling averages, standard deviation, change percentages).
+* **[Models/RawMarketData.cs](/Models/RawMarketData.cs)**: Defines the schema for logging raw telemetry inputs prior to processing.
+* **[Models/RefreshToken.cs](/Models/RefreshToken.cs)**: Establishes the database schema for storing refresh tokens linked to specific users to validate sessions.
 
 ### ⚙️ Core Application Services
-* **[Services/BackgroundProcessor.cs]( /Project1/Services/BackgroundProcessor.cs)**: An asynchronous HostedService. It reads incoming telemetry from the channel queue reader, aggregates them into batches, persists them into PostgreSQL, and triggers statistical recalculations.
-* **[Services/TokenService.cs]( /Project1/Services/TokenService.cs)**: Contains security utility logic to create JWT access tokens and cryptographically random secure base64 refresh token strings.
-* **[Services/MarketDataSimulator.cs]( /Project1/Services/MarketDataSimulator.cs)**: A background worker service that runs price simulations for stocks (NVDA, TSM, and SOX index) and broadcasts them directly to clients via SignalR.
-* **[Services/MetricService.cs]( /Project1/Services/MetricService.cs)**: Implements mathematical formulas to compute standard deviation and change rates on the last 20 telemetry entries of a metric.
-* **[Services/IngestionService.cs]( /Project1/Services/IngestionService.cs)**: Provides a gateway service to write telemetry data to the in-memory bounded queue.
+* **[Services/BackgroundProcessor.cs](/Services/BackgroundProcessor.cs)**: An asynchronous HostedService. It reads incoming telemetry from the channel queue reader, aggregates them into batches, persists them into PostgreSQL, and triggers statistical recalculations.
+* **[Services/TokenService.cs](/Services/TokenService.cs)**: Contains security utility logic to create JWT access tokens and cryptographically random secure base64 refresh token strings.
+* **[Services/MarketDataSimulator.cs](/Services/MarketDataSimulator.cs)**: A background worker service that runs price simulations for stocks (NVDA, TSM, and SOX index) and broadcasts them directly to clients via SignalR.
+* **[Services/MetricService.cs](/Services/MetricService.cs)**: Implements mathematical formulas to compute standard deviation and change rates on the last 20 telemetry entries of a metric.
+* **[Services/IngestionService.cs](/Services/IngestionService.cs)**: Provides a gateway service to write telemetry data to the in-memory bounded queue.
 
 ### 🌐 Frontend Client Interface
-* **[wwwroot/index.html]( /Project1/wwwroot/index.html)**: The HTML layout of the main dashboard, structured into visual analysis columns (left) and ingestion simulator consoles (right).
-* **[wwwroot/style.css]( /Project1/wwwroot/style.css)**: The custom CSS stylesheet that creates a translucent glassmorphic look with neon accent glows, and defines media query rules for mobile styling.
-* **[wwwroot/app.js]( /Project1/wwwroot/app.js)**: The core client script. It listens to WebSocket and SSE streams, handles Chart.js and wave drawings, and wraps all fetch operations in automatic token refresh interceptors.
-* **[wwwroot/login.html]( /Project1/wwwroot/login.html) & [wwwroot/register.html]( /Project1/wwwroot/register.html)**: Monolithic glassmorphic forms for signing in and creating accounts.
+* **[wwwroot/index.html](/wwwroot/index.html)**: The HTML layout of the main dashboard, structured into visual analysis columns (left) and ingestion simulator consoles (right).
+* **[wwwroot/style.css](/wwwroot/style.css)**: The custom CSS stylesheet that creates a translucent glassmorphic look with neon accent glows, and defines media query rules for mobile styling.
+* **[wwwroot/app.js](/wwwroot/app.js)**: The core client script. It listens to WebSocket and SSE streams, handles Chart.js and wave drawings, and wraps all fetch operations in automatic token refresh interceptors.
+* **[wwwroot/login.html](/wwwroot/login.html) & [wwwroot/register.html](/wwwroot/register.html)**: Monolithic glassmorphic forms for signing in and creating accounts.
 
 ---
 
