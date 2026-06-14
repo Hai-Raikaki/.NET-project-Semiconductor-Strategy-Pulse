@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Semiconductor Strategy Pulse</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="auth-page">
+    <div class="radial-glow"></div>
+    <div class="auth-container-wrapper">
+        <div class="auth-logo">
+            <span class="brand-pulse-dot"></span>
+            <h1>SEMICONDUCTOR STRATEGY PULSE</h1>
+        </div>
+        
+        <div class="auth-card">
+            <h2>SIGN UP</h2>
+            <p class="auth-subtitle">Create an account to monitor strategy</p>
+            
+            <form id="register-page-form" class="auth-form-standalone">
+                <div class="form-group">
+                    <label for="reg-fullName">Full Name</label>
+                    <input type="text" id="reg-fullName" placeholder="e.g. John Doe" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-email">Email Address</label>
+                    <input type="email" id="reg-email" placeholder="e.g. user@pulse.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-password">Password</label>
+                    <input type="password" id="reg-password" placeholder="Min 6 chars, uppercase, digit" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-confirmPassword">Confirm Password</label>
+                    <input type="password" id="reg-confirmPassword" placeholder="Confirm password" required>
+                </div>
+                
+                <button type="submit" class="glow-button">
+                    <span>CREATE ACCOUNT</span>
+                </button>
+                
+                <div id="register-alert" class="alert-box hide"></div>
+            </form>
+            
+            <div class="auth-footer-links">
+                <span>Already have an account? <a href="login.html">Sign In</a></span>
+                <span><a href="/" class="back-link">&larr; Back to Dashboard</a></span>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.getElementById('register-page-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const fullName = document.getElementById('reg-fullName').value;
+            const email = document.getElementById('reg-email').value;
+            const password = document.getElementById('reg-password').value;
+            const confirmPassword = document.getElementById('reg-confirmPassword').value;
+            const alertBox = document.getElementById('register-alert');
+            
+            alertBox.className = 'alert-box hide';
+            
+            try {
+                const res = await fetch('/api/auth/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password, confirmPassword, fullName })
+                });
+                
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.message || 'Registration failed');
+                
+                alertBox.textContent = 'Account created successfully! Redirecting to Sign In...';
+                alertBox.className = 'alert-box success';
+                
+                setTimeout(() => {
+                    window.location.href = '/login.html';
+                }, 1500);
+            } catch (err) {
+                alertBox.textContent = err.message;
+                alertBox.className = 'alert-box error';
+            }
+        });
+    </script>
+</body>
+</html>

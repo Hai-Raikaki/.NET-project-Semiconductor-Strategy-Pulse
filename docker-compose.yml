@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  pulse_db:
+    image: postgres:16-alpine
+    container_name: pulse_db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: semiconductor_pulse
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d semiconductor_pulse"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  pulse_cache:
+    image: redis:7-alpine
+    container_name: pulse_cache
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  pulse_api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: pulse_api
+    ports:
+      - "8080:8080"
+    depends_on:
+      pulse_db:
+        condition: service_healthy
+      pulse_cache:
+        condition: service_healthy
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Host=pulse_db;Database=semiconductor_pulse;Username=postgres;Password=postgres;Pooling=true;Minimum Pool Size=5;Maximum Pool Size=100;
+      - Redis__ConnectionString=pulse_cache:6379
+      - Jwt__Key=super_secret_semiconductor_pulse_system_key_2026_long_key_required
+      - Jwt__Issuer=SemiconductorStrategyPulse
+      - Jwt__Audience=SemiconductorPulseClients
+    restart: always
+
+volumes:
+  postgres_data:
+  redis_data:

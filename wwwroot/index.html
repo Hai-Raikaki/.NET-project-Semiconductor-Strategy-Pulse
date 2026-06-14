@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semiconductor Strategy Pulse Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- CDN Dependencies: SignalR and Chart.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="radial-glow"></div>
+    <div class="container">
+        
+        <!-- Header -->
+        <header>
+            <div class="brand">
+                <span class="brand-pulse-dot"></span>
+                <h1>SEMICONDUCTOR STRATEGY PULSE</h1>
+            </div>
+            <div class="header-right">
+                <div id="user-profile-nav" class="user-profile-nav">
+                    <button id="nav-signin-btn" class="btn-glow-small">Sign In</button>
+                    <button id="nav-signup-btn" class="btn-glow-small outline">Sign Up</button>
+                </div>
+                <div class="system-statuses">
+                    <div class="status-item">
+                        <span class="status-lbl">Telemetry (SSE):</span>
+                        <span id="sse-status" class="status-badge connecting">Connecting...</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-lbl">Stock Ticker (SignalR):</span>
+                        <span id="signalr-status" class="status-badge connecting">Connecting...</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Dashboard Layout -->
+        <main class="dashboard-layout">
+            
+            <!-- Left Column: Analytics Visuals (70%) -->
+            <div class="column-left">
+                
+                <!-- Strategic Telemetry Section -->
+                <section class="metrics-panel">
+                    <div class="panel-header">
+                        <h2>Strategic Telemetry Pulse</h2>
+                        <span class="status-live-dot">Live Feed</span>
+                    </div>
+                    <div class="telemetry-grid">
+                        <!-- Card 1: Book to Bill -->
+                        <div class="metric-card" id="card-book-to-bill">
+                            <div class="card-glow"></div>
+                            <div class="card-header">
+                                <span class="category-tag supply">Supply Chain</span>
+                                <span class="status-tag" id="status-book-to-bill">--</span>
+                            </div>
+                            <h3>Global Supply-Demand Balance</h3>
+                            <div class="key-lbl">Book-to-Bill Ratio</div>
+                            <div class="main-val">
+                                <span class="value" id="val-book-to-bill">--</span>
+                                <span class="unit">ratio</span>
+                            </div>
+                            <div class="card-footer">
+                                <div class="change-rate" id="change-book-to-bill">--</div>
+                                <div class="stats-box">
+                                    <span>SD: <strong id="sd-book-to-bill">--</strong></span>
+                                    <span>N: <strong id="n-book-to-bill">--</strong></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 2: Lead Time -->
+                        <div class="metric-card" id="card-lead-time">
+                            <div class="card-glow"></div>
+                            <div class="card-header">
+                                <span class="category-tag supply">Supply Chain</span>
+                                <span class="status-tag" id="status-lead-time">--</span>
+                            </div>
+                            <h3>Average Lead Time</h3>
+                            <div class="key-lbl">Order to Delivery</div>
+                            <div class="main-val">
+                                <span class="value" id="val-lead-time">--</span>
+                                <span class="unit">weeks</span>
+                            </div>
+                            <div class="card-footer">
+                                <div class="change-rate" id="change-lead-time">--</div>
+                                <div class="stats-box">
+                                    <span>SD: <strong id="sd-lead-time">--</strong></span>
+                                    <span>N: <strong id="n-lead-time">--</strong></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 3: Yield Rate -->
+                        <div class="metric-card" id="card-yield-rate">
+                            <div class="card-glow"></div>
+                            <div class="card-header">
+                                <span class="category-tag capacity">Capacity</span>
+                                <span class="status-tag" id="status-yield-rate">--</span>
+                            </div>
+                            <h3>Advanced Node Yield Rate</h3>
+                            <div class="key-lbl">3nm/5nm Production</div>
+                            <div class="main-val">
+                                <span class="value" id="val-yield-rate">--</span>
+                                <span class="unit">%</span>
+                            </div>
+                            <div class="card-footer">
+                                <div class="change-rate" id="change-yield-rate">--</div>
+                                <div class="stats-box">
+                                    <span>SD: <strong id="sd-yield-rate">--</strong></span>
+                                    <span>N: <strong id="n-yield-rate">--</strong></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 4: CapEx -->
+                        <div class="metric-card" id="card-capex">
+                            <div class="card-glow"></div>
+                            <div class="card-header">
+                                <span class="category-tag financial">Financial</span>
+                                <span class="status-tag" id="status-capex">--</span>
+                            </div>
+                            <h3>CapEx Momentum</h3>
+                            <div class="key-lbl">Infrastructure Investment</div>
+                            <div class="main-val">
+                                <span class="value" id="val-capex">--</span>
+                                <span class="unit">$B USD</span>
+                            </div>
+                            <div class="card-footer">
+                                <div class="change-rate" id="change-capex">--</div>
+                                <div class="stats-box">
+                                    <span>SD: <strong id="sd-capex">--</strong></span>
+                                    <span>N: <strong id="n-capex">--</strong></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Market Tickers Section -->
+                <section class="metrics-panel">
+                    <div class="panel-header">
+                        <h2>Semiconductor Stock Tickers</h2>
+                        <span class="status-live-dot">Live Feed</span>
+                    </div>
+                    <div class="tickers-grid">
+                        <!-- Card 5: NVDA Stock -->
+                        <div class="metric-card stock-card" id="card-nvda">
+                            <div class="card-glow"></div>
+                            <div class="card-header">
+                                <span class="category-tag stock">Stock Ticker</span>
+                                <span class="status-tag" id="status-nvda">NVDA</span>
+                            </div>
+                            <h3>NVIDIA Corporation</h3>
+                            <div class="key-lbl">NASDAQ Price</div>
+                            <div class="main-val">
+                                <span class="currency">$</span>
+                                <span class="value" id="val-nvda">--</span>
+                            </div>
+                            <div class="card-footer">
+                                <div class="change-rate" id="change-nvda">--</div>
+                                <div class="stats-box">
+                                    <span>Source: <strong>SignalR</strong></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 6: TSM Stock -->
+                        <div class="metric-card stock-card" id="card-tsm">
+                            <div class="card-glow"></div>
+                            <div class="card-header">
+                                <span class="category-tag stock">Stock Ticker</span>
+                                <span class="status-tag" id="status-tsm">TSM</span>
+                            </div>
+                            <h3>TSMC Ltd.</h3>
+                            <div class="key-lbl">NYSE Price (ADR)</div>
+                            <div class="main-val">
+                                <span class="currency">$</span>
+                                <span class="value" id="val-tsm">--</span>
+                            </div>
+                            <div class="card-footer">
+                                <div class="change-rate" id="change-tsm">--</div>
+                                <div class="stats-box">
+                                    <span>Source: <strong>SignalR</strong></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 7: SOX Index -->
+                        <div class="metric-card stock-card" id="card-sox">
+                            <div class="card-glow"></div>
+                            <div class="card-header">
+                                <span class="category-tag stock">Stock Index</span>
+                                <span class="status-tag" id="status-sox">SOX</span>
+                            </div>
+                            <h3>PHLX Semiconductor Index</h3>
+                            <div class="key-lbl">Capitalization Weighted</div>
+                            <div class="main-val">
+                                <span class="value" id="val-sox">--</span>
+                                <span class="unit">pts</span>
+                            </div>
+                            <div class="card-footer">
+                                <div class="change-rate" id="change-sox">--</div>
+                                <div class="stats-box">
+                                    <span>Source: <strong>SignalR</strong></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Visualization Panel -->
+                <section class="chart-panel">
+                    <div class="panel-header">
+                        <h2>Live Market Performance Ticker (Last 20 ticks)</h2>
+                        <span class="update-info">Chart.js Engine</span>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="performance-chart"></canvas>
+                    </div>
+                    <div class="wave-box">
+                        <canvas id="pulse-wave"></canvas>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Right Column: Control Center (30%) -->
+            <div class="column-right">
+                
+                <!-- Telemetry Ingest Simulator -->
+                <section class="control-panel">
+                    <div class="panel-header">
+                        <h2>Ingestion Simulator</h2>
+                        <span class="update-info">JWT Secured Gateway</span>
+                    </div>
+                    <div class="form-wrapper">
+                        <form id="simulator-form">
+                            <div class="form-group">
+                                <label for="metric-select">Select Metric</label>
+                                <select id="metric-select" required>
+                                    <option value="BOOK_TO_BILL">Book-to-Bill Ratio (BOOK_TO_BILL)</option>
+                                    <option value="LEAD_TIME">Average Lead Time (LEAD_TIME)</option>
+                                    <option value="YIELD_RATE">Advanced Node Yield Rate (YIELD_RATE)</option>
+                                    <option value="CAPEX">CapEx Momentum (CAPEX)</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="metric-value">Datapoint Value</label>
+                                <div class="input-container">
+                                    <input type="number" id="metric-value" step="0.01" min="0" placeholder="e.g. 1.25" required>
+                                    <span id="unit-indicator" class="input-unit">ratio</span>
+                                </div>
+                            </div>
+
+                            <div class="auth-box" id="simulator-auth-container">
+                                <div class="auth-hdr">
+                                    <span>INGESTION AUTHORIZATION</span>
+                                    <span class="secure-badge error" id="simulator-security-badge">UNAUTHORIZED</span>
+                                </div>
+                                <div class="simulator-auth-msg" id="simulator-auth-msg">
+                                    Please sign in with an Admin or IoTDevice account to enable telemetry ingestion.
+                                </div>
+                            </div>
+
+                            <button type="submit" id="submit-btn" class="glow-button">
+                                <span>POST TELEMETRY POINT</span>
+                            </button>
+                        </form>
+                        <div id="sim-alert" class="alert-box hide"></div>
+                    </div>
+                </section>
+
+                <!-- Diagnostics Logger Console -->
+                <section class="console-panel">
+                    <div class="panel-header">
+                        <h2>Diagnostic Feed Console</h2>
+                        <button id="clear-console" class="btn-text">Clear Console</button>
+                    </div>
+                    <div class="console-body" id="console-logs">
+                        <div class="log-line system">Diagnostic logs initialized... Connection pending.</div>
+                    </div>
+                </section>
+            </div>
+            
+        </main>
+    </div>
+    <script src="app.js?v=2"></script>
+</body>
+</html>

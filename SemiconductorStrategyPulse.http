@@ -1,0 +1,6 @@
+@SemiconductorStrategyPulse_HostAddress = http://localhost:5432
+
+GET {{SemiconductorStrategyPulse_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
