@@ -8,8 +8,8 @@ Here is the design and business rationale behind this layout:
 
 ### 1. The Core Split: Operations vs. Market Value
 The interface is split into two columns to showcase the relationship between **manufacturing telemetry** (operational health) and **market capitalization** (financial value):
-* **Left Column (70% - Strategic Telemetry Pulse):** This is the actual **Semiconductor Operations** side. It displays operational KPIs like **Yield Rate** (factory output quality), **Lead Time** (supply chain speed), **Book-to-Bill Ratio** (supply/demand), and **CapEx** (capital spending on fabrication machines).
-* **Right Column (30% - Market Ticker Grid & Simulator):** This is the **Financial Market** side. It displays the stock prices of key market leaders: **NVIDIA (NVDA)** (representing design/demand), **TSMC (TSM)** (representing manufacturing/supply), and **SOX** (the Philadelphia Semiconductor Index, representing the health of the entire sector).
+* **Strategic Telemetry Pulse:** This is the actual **Semiconductor Operations** side. It displays operational KPIs like **Yield Rate** (factory output quality), **Lead Time** (supply chain speed), **Book-to-Bill Ratio** (supply/demand), and **CapEx** (capital spending on fabrication machines).
+* **Market Ticker Grid & Simulator:** This is the **Financial Market** side. It displays the stock prices of key market leaders: **NVIDIA (NVDA)** (representing design/demand), **TSMC (TSM)** (representing manufacturing/supply), and **SOX** (the Philadelphia Semiconductor Index, representing the health of the entire sector).
 
 ---
 
