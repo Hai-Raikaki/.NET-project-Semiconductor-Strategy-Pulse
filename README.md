@@ -8,15 +8,15 @@ This application acts as a real-time monitoring center for semiconductor supply 
 
 # ⚠️ Data Disclaimer
 
-This project is `a simulation for demonstration` purposes only and does not use real-time stock market data.
+- This project is `a simulation for demonstration` purposes only and does not use real-time stock market data.
 
-All values for NVDA, TSM, and the SOX index are simulated — either `randomly generated or following a predefined script.`
+- All values for NVDA, TSM, and the SOX index are simulated — either `randomly generated or following a predefined script.`
 
-The purpose is to illustrate dashboard layout, units of measurement (USD/share, USD/ADR, index points), and percentage change comparisons (%), for learning, UI testing, or prototyping.
+- The purpose is to illustrate dashboard layout, units of measurement (USD/share, USD/ADR, index points), and percentage change comparisons (%), for learning, UI testing, or prototyping.
 
-The data does not reflect actual price movements of NVIDIA, TSMC, or the semiconductor industry.
+- The data does not reflect actual price movements of NVIDIA, TSMC, or the semiconductor industry.
 
-To turn this into a live dashboard, integrate a financial data API (e.g., Yahoo Finance, Alpha Vantage, Polygon.io).
+- To turn this into a live dashboard, integrate a financial data API (e.g., Yahoo Finance, Alpha Vantage, Polygon.io).
 
 ---
 
