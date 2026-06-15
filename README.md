@@ -6,11 +6,11 @@ This application acts as a real-time monitoring center for semiconductor supply 
 
 ---
 
-⚠️ Data Disclaimer
+# ⚠️ Data Disclaimer
 
-This project is a simulation for demonstration purposes only and does not use real-time stock market data.
+This project is `a simulation for demonstration` purposes only and does not use real-time stock market data.
 
-All values for NVDA, TSM, and the SOX index are simulated — either randomly generated or following a predefined script.
+All values for NVDA, TSM, and the SOX index are simulated — either `randomly generated or following a predefined script.`
 
 The purpose is to illustrate dashboard layout, units of measurement (USD/share, USD/ADR, index points), and percentage change comparisons (%), for learning, UI testing, or prototyping.
 
