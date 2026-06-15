@@ -1,306 +1,380 @@
-/* Cyberpunk Neon Design Tokens */
+/* =================================================================================
+    1. KHAI BÁO BIẾN THIẾT KẾ (CSS VARIABLES & TOKENS)
+   ================================================================================= */
 :root {
+    /* Màu nền đen sâu nhất làm nền chính của trang */
     --bg-darkest: #060913;
+    /* Màu nền đen tối phụ cho các khung panel nhỏ */
     --bg-dark: #0a0f1d;
+    
+    /* Màu nền thẻ trong suốt mờ ảo hiệu ứng Glassmorphism */
     --bg-card: rgba(13, 20, 38, 0.45);
+    /* Đường viền mỏng trong suốt để phản chiếu ánh sáng */
     --border-color: rgba(255, 255, 255, 0.05);
+    /* Hào quang phát sáng viền nhẹ màu Cyan */
     --border-glow: rgba(0, 240, 255, 0.15);
     
+    /* Màu văn bản chính (màu trắng xanh sáng) */
     --text-main: #f0f4ff;
+    /* Màu văn bản phụ/ghi chú (màu xanh xám nhạt) */
     --text-muted: #8899b5;
     
-    --accent-cyan: #00f0ff;
-    --accent-purple: #bd00ff;
-    --accent-green: #00ff66;
-    --accent-yellow: #ffc400;
-    --accent-red: #ff0055;
-    --accent-blue: #0088ff;
+    /* Bảng màu Neon tạo điểm nhấn đặc trưng Cyberpunk */
+    --accent-cyan: #00f0ff;      /* Màu xanh ngọc (Cyan) - Telemetry */
+    --accent-purple: #bd00ff;    /* Màu tím Neon (Purple) - Market Stock */
+    --accent-green: #00ff66;     /* Màu xanh lá Neon (Green) - Tăng trưởng/Ổn định */
+    --accent-yellow: #ffc400;    /* Màu vàng Neon (Yellow) - Cảnh báo nhẹ */
+    --accent-red: #ff0055;       /* Màu đỏ Neon (Red) - Nguy kịch/Giảm sâu */
+    --accent-blue: #0088ff;      /* Màu xanh dương - Liên kết/Phụ trợ */
 }
 
-/* Base Body Elements */
+/* =================================================================================
+   2. THIẾT LẬP CƠ BẢN (BASE STYLING & BODY ELEMENTS)
+   ================================================================================= */
 body {
-    background-color: var(--bg-darkest);
-    color: var(--text-main);
-    font-family: 'Inter', sans-serif;
-    min-height: 100vh;
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
+    background-color: var(--bg-darkest);                            /* Áp dụng màu nền tối sâu nhất */
+    color: var(--text-main);                                        /* Đặt màu chữ mặc định toàn trang */
+    font-family: 'Inter', sans-serif;                               /* Sử dụng phông chữ không chân Inter hiện đại */
+    min-height: 100vh;                                              /* Đặt chiều cao tối thiểu bằng 100% khung màn hình */
+    margin: 0;                                                      /* Xóa khoảng giãn biên mặc định của trình duyệt */
+    padding: 0;                                                     /* Xóa khoảng đệm mặc định */
+    overflow-x: hidden;                                             /* Ẩn thanh cuộn ngang để tránh layout bị vỡ ngang */
 }
 
-/* Background Radial Glow */
+/* Lớp phủ hào quang phát sáng nền chìm phía sau (Background Radial Glow) */
 .radial-glow {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
+    position: fixed;                                                /* Ghim cố định ở vị trí nền, không di chuyển khi cuộn trang */
+    top: 0;                                                         /* Căn sát lề trên */
+    left: 0;                                                        /* Căn sát lề trái */
+    width: 100%;                                                    /* Giãn rộng hết màn hình */
+    height: 100%;                                                   /* Giãn cao hết màn hình */
+    z-index: -1;                                                    /* Đặt nằm sâu nhất dưới tất cả các phần tử khác */
+    /* Phối hợp hai vòng tròn chuyển màu mờ để tạo ánh sáng Neon chìm */
     background: radial-gradient(circle at 10% 20%, rgba(189, 0, 255, 0.04) 0%, transparent 40%),
                 radial-gradient(circle at 90% 80%, rgba(0, 240, 255, 0.04) 0%, transparent 45%);
-    pointer-events: none;
+    pointer-events: none;                                           /* Cho phép click chuột xuyên qua lớp phủ nền */
 }
 
+/* Khung chứa nội dung trung tâm của trang web */
 .container {
-    max-width: 1440px;
-    margin: 0 auto;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+    max-width: 1440px;                                              /* Chiều rộng tối đa của nội dung là 1440px */
+    margin: 0 auto;                                                 /* Căn giữa khung container trên trình duyệt */
+    padding: 20px;                                                  /* Khoảng cách đệm viền 20px */
+    display: flex;                                                  /* Kích hoạt mô hình Flexbox */
+    flex-direction: column;                                         /* Sắp xếp các phần tử con dạng cột dọc */
+    gap: 20px;                                                      /* Khoảng cách giữa các hàng con là 20px */
 }
 
-/* Header Styling */
+/* =================================================================================
+   3. THANH TIÊU ĐỀ TRÊN CÙNG (HEADER & BRAND ELEMENTS)
+   ================================================================================= */
 header {
-    background: var(--bg-card);
-    backdrop-filter: blur(12px);
-    border: 1px solid var(--border-color);
-    border-radius: 16px;
-    padding: 16px 24px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+    background: var(--bg-card);                                     /* Nền gương mờ kính trong suốt */
+    backdrop-filter: blur(12px);                                    /* Làm mờ các chi tiết chạy phía sau kính */
+    border: 1px solid var(--border-color);                          /* Viền mỏng 1px phản chiếu ánh sáng nhẹ */
+    border-radius: 16px;                                            /* Bo tròn 4 góc header 16px */
+    padding: 16px 24px;                                             /* Khoảng đệm dọc 16px và ngang 24px */
+    display: flex;                                                  /* Kích hoạt Flexbox sắp xếp con ngang */
+    justify-content: space-between;                                 /* Dồn hai cụm con sang lề trái và lề phải */
+    align-items: center;                                            /* Căn giữa các cụm con theo chiều dọc */
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);                    /* Đổ bóng đen sâu tạo chiều nổi trên trang */
 }
 
+/* Cụm logo và tên hệ thống */
 .brand {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+    display: flex;                                                  /* Xếp chấm tròn và tiêu đề ngang hàng */
+    align-items: center;                                            /* Căn giữa trục dọc */
+    gap: 12px;                                                      /* Khoảng cách giữa chúng là 12px */
 }
 
+/* Chấm tròn nhấp nháy phát sáng Neon đại diện cho nhịp tim */
 .brand-pulse-dot {
-    width: 12px;
-    height: 12px;
-    background-color: var(--accent-cyan);
-    border-radius: 50%;
-    box-shadow: 0 0 10px var(--accent-cyan);
-    animation: ring-pulse-anim 2s infinite ease-in-out;
+    width: 12px;                                                    /* Đường kính ngang 12px */
+    height: 12px;                                                   /* Đường kính dọc 12px */
+    background-color: var(--accent-cyan);                           /* Màu nền xanh Cyan */
+    border-radius: 50%;                                             /* Bo tròn tuyệt đối tạo hình tròn */
+    box-shadow: 0 0 10px var(--accent-cyan);                        /* Đổ bóng phát sáng xanh ngọc */
+    animation: ring-pulse-anim 2s infinite ease-in-out;             /* Liên kết chạy vòng lặp hoạt họa nhịp đập */
 }
 
+/* Tiêu đề chính chữ lớn phông chữ công nghiệp Orbitron */
 h1 {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 1.2rem;
-    font-weight: 900;
-    letter-spacing: 2px;
-    background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin: 0;
+    font-family: 'Orbitron', sans-serif;                            /* Áp dụng phông chữ công nghệ cao Orbitron */
+    font-size: 1.2rem;                                              /* Kích thước chữ 1.2rem */
+    font-weight: 900;                                               /* Độ dày chữ tối đa (Black) */
+    letter-spacing: 2px;                                            /* Khoảng cách giữa các chữ cái rộng 2px */
+    background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple)); /* Gradient chữ xanh ngọc sang tím */
+    -webkit-background-clip: text;                                  /* Chỉ tô màu nền giới hạn bên trong nét chữ */
+    -webkit-text-fill-color: transparent;                           /* Làm trong suốt màu chữ gốc để lộ dải Gradient */
+    margin: 0;                                                      /* Xóa lề mặc định */
 }
 
+/* Khung hiển thị các trạng thái hệ thống bên phải header */
 .system-statuses {
-    display: flex;
-    gap: 24px;
+    display: flex;                                                  /* Xếp các trạng thái nằm ngang */
+    gap: 24px;                                                      /* Khoảng cách giữa các trạng thái là 24px */
 }
 
 .status-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.8rem;
+    display: flex;                                                  /* Xếp nhãn và badge nằm ngang */
+    align-items: center;                                            /* Căn giữa trục dọc */
+    gap: 8px;                                                       /* Khoảng cách 8px */
+    font-size: 0.8rem;                                              /* Cỡ chữ nhỏ gọn 0.8rem */
 }
 
 .status-lbl {
-    color: var(--text-muted);
+    color: var(--text-muted);                                       /* Đặt chữ màu xanh xám nhạt */
 }
 
+/* Huy hiệu hiển thị trạng thái kết nối */
 .status-badge {
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-size: 0.72rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+    padding: 4px 10px;                                              /* Khoảng đệm dọc 4px, ngang 10px */
+    border-radius: 20px;                                            /* Bo tròn góc tạo hình viên thuốc */
+    font-size: 0.72rem;                                             /* Cỡ chữ siêu nhỏ 0.72rem */
+    font-weight: 700;                                               /* Định dạng chữ in đậm */
+    text-transform: uppercase;                                      /* Buộc viết hoa hoàn toàn chữ cái */
+    letter-spacing: 0.5px;                                          /* Khoảng cách chữ rộng nhẹ */
 }
 
+/* Kiểu hiển thị trạng thái: ĐANG KẾT NỐI (Màu vàng nhạt) */
 .status-badge.connecting {
-    background: rgba(255, 196, 0, 0.1);
-    color: var(--accent-yellow);
-    border: 1px solid rgba(255, 196, 0, 0.2);
+    background: rgba(255, 196, 0, 0.1);                             /* Màu nền vàng bán trong suốt */
+    color: var(--accent-yellow);                                    /* Màu chữ vàng */
+    border: 1px solid rgba(255, 196, 0, 0.2);                       /* Viền vàng mỏng */
 }
 
+/* Kiểu hiển thị trạng thái: ĐÃ KẾT NỐI THÀNH CÔNG (Xanh lá cây rực rỡ) */
 .status-badge.connected {
-    background: rgba(0, 255, 102, 0.1);
-    color: var(--accent-green);
-    border: 1px solid rgba(0, 255, 102, 0.2);
-    box-shadow: 0 0 8px rgba(0, 255, 102, 0.15);
+    background: rgba(0, 255, 102, 0.1);                             /* Màu nền xanh lá bán trong suốt */
+    color: var(--accent-green);                                     /* Màu chữ xanh lá */
+    border: 1px solid rgba(0, 255, 102, 0.2);                       /* Viền xanh lá mỏng */
+    box-shadow: 0 0 8px rgba(0, 255, 102, 0.15);                    /* Đổ bóng phát sáng xanh lá */
 }
 
+/* Kiểu hiển thị trạng thái: MẤT KẾT NỐI / LỖI (Đỏ Neon) */
 .status-badge.disconnected {
-    background: rgba(255, 0, 85, 0.1);
-    color: var(--accent-red);
-    border: 1px solid rgba(255, 0, 85, 0.2);
+    background: rgba(255, 0, 85, 0.1);                              /* Màu nền đỏ bán trong suốt */
+    color: var(--accent-red);                                       /* Màu chữ đỏ */
+    border: 1px solid rgba(255, 0, 85, 0.2);                        /* Viền đỏ mỏng */
 }
 
-/* Dashboard Two-Column Layout */
+/* =================================================================================
+   4. BỐ CỤC KHUNG DASHBOARD (DASHBOARD GRID/FLEX LAYOUT)
+   ================================================================================= */
+
+/* Khung bao layout ngoài cùng sắp xếp dọc */
 .dashboard-layout {
-    display: flex;
-    gap: 24px;
-    align-items: flex-start;
-    width: 100%;
+    display: flex;                                                  /* Kích hoạt Flexbox */
+    flex-direction: column;                                         /* Sắp xếp nội dung theo hàng từ trên xuống */
+    gap: 24px;                                                      /* Khoảng giãn cách các hàng là 24px */
+    width: 100%;                                                    /* Chiều rộng chiếm trọn 100% container */
 }
 
-.column-left {
-    flex: 1;
-    display: flex;
+/* Hàng trên cùng: Chứa các bộ lưới Metrics đo lường rộng 100% màn hình */
+.top-row {
+    display: flex;                                                  /* Kích hoạt Flexbox */
+    flex-direction: column;                                         /* Xếp chồng dọc các phần panel metric */
+    gap: 24px;                                                      /* Khoảng giãn cách giữa các panel */
+    width: 100%;                                                    /* Rộng tối đa */
+}
+
+/* Hàng phía dưới: Chia tách thành 2 cột ngồi song song (Split Columns) */
+.bottom-split-row {
+    display: flex;                                                  /* Kích hoạt Flexbox sắp xếp ngang */
+    gap: 24px;                                                      /* Khoảng giãn ngang giữa 2 cột là 24px */
+    align-items: flex-start;                                        /* Căn đỉnh đầu 2 cột ngang nhau */
+    width: 100%;                                                    /* Giãn rộng 100% */
+}
+
+/* Cột dưới bên trái: Chứa biểu đồ và sóng nhịp tim (Chiếm trọn phần chiều rộng còn lại) */
+.bottom-left-column {
+    flex: 1;                                                        /* Tỉ lệ giãn rộng linh hoạt tối đa (flex-grow: 1) */
+    display: flex;                                                  /* Khai báo Flexbox sắp xếp dọc các con */
     flex-direction: column;
     gap: 24px;
-    min-width: 0; /* Prevents flex children from stretching outside parent */
+    min-width: 0;                                                   /* Đảm bảo flex con không phình rộng vỡ bố cục */
 }
 
-.column-right {
-    width: 380px;
-    display: flex;
+/* Cột dưới bên phải: Bộ simulator nhập dữ liệu và nhật ký log (Độ rộng cố định 380px) */
+.bottom-right-column {
+    width: 380px;                                                   /* Chiều rộng cố định 380 pixel */
+    display: flex;                                                  /* Khai báo Flexbox sắp xếp dọc các con */
     flex-direction: column;
     gap: 24px;
-    flex-shrink: 0;
+    flex-shrink: 0;                                                 /* Cấm co nhỏ hơn kích thước 380px trên màn hình rộng */
 }
 
+/* Thiết lập thích ứng màn hình (Responsive) cho Viewport từ 1100px trở xuống */
 @media (max-width: 1100px) {
-    .dashboard-layout {
-        flex-direction: column;
+    .bottom-split-row {
+        flex-direction: column;                                     /* Chuyển 2 cột song song thành xếp chồng dọc */
     }
-    .column-right {
-        width: 100%;
+    .bottom-right-column {
+        width: 100%;                                                /* Cột phải giãn rộng tối đa 100% màn hình */
     }
 }
 
+/* Khung nền thiết kế kính mờ chẩn đoán (Glassmorphic Panels) */
 .metrics-panel, .chart-panel, .control-panel, .console-panel {
-    background: var(--bg-card);
-    backdrop-filter: blur(16px);
-    border: 1px solid var(--border-color);
-    border-radius: 20px;
-    padding: 20px;
-    box-shadow: 0 12px 32px 0 rgba(0, 0, 0, 0.3);
+    background: var(--bg-card);                                     /* Màu nền thẻ gương mờ */
+    backdrop-filter: blur(16px);                                    /* Làm nhòe các phần tử nền phía dưới kính */
+    border: 1px solid var(--border-color);                          /* Viền phản quang kính mỏng */
+    border-radius: 20px;                                            /* Bo góc mềm mại 20px */
+    padding: 20px;                                                  /* Khoảng trống đệm bên trong thẻ là 20px */
+    box-shadow: 0 12px 32px 0 rgba(0, 0, 0, 0.3);                    /* Đổ bóng tối tăng độ sâu 3D */
 }
 
+/* Phần header bên trong mỗi Panel */
 .panel-header {
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 10px;
-    margin-bottom: 18px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    border-bottom: 1px solid var(--border-color);                  /* Nét kẻ gạch dưới mỏng phân chia */
+    padding-bottom: 10px;                                           /* Khoảng cách đệm dưới 10px */
+    margin-bottom: 18px;                                            /* Khoảng cách với nội dung phía dưới là 18px */
+    display: flex;                                                  /* Căn ngang nội dung */
+    justify-content: space-between;                                 /* Dồn tiêu đề sang trái, nhãn phụ sang phải */
+    align-items: center;                                            /* Căn dọc */
 }
 
+/* Tiêu đề in đậm phông Orbitron màu Cyan sáng của Panel */
 .panel-header h2 {
-    font-size: 0.95rem;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    margin: 0;
-    text-transform: uppercase;
-    color: var(--accent-cyan);
-    font-family: 'Orbitron', sans-serif;
+    font-size: 0.95rem;                                             /* Kích thước chữ tiêu đề */
+    font-weight: 700;                                               /* Độ đậm chữ */
+    letter-spacing: 1.5px;                                          /* Khoảng cách ký tự rộng 1.5px */
+    margin: 0;                                                      /* Xóa margin mặc định */
+    text-transform: uppercase;                                      /* In hoa toàn bộ tiêu đề */
+    color: var(--accent-cyan);                                      /* Đặt màu chữ xanh Cyan */
+    font-family: 'Orbitron', sans-serif;                            /* Định dạng phông chữ công nghệ */
 }
 
+/* Dấu nhấp nháy chỉ báo luồng đang trực tuyến (Live Feed) */
 .status-live-dot {
-    font-size: 0.72rem;
-    color: var(--accent-green);
-    font-weight: 700;
-    text-transform: uppercase;
-    display: flex;
-    align-items: center;
-    gap: 6px;
+    font-size: 0.72rem;                                             /* Chữ siêu nhỏ */
+    color: var(--accent-green);                                     /* Chữ màu xanh lá */
+    font-weight: 700;                                               /* Chữ đậm */
+    text-transform: uppercase;                                      /* Viết hoa */
+    display: flex;                                                  /* Căn ngang */
+    align-items: center;                                            /* Căn dọc */
+    gap: 6px;                                                       /* Cách chấm tròn 6px */
 }
 
+/* Vẽ chấm tròn phát sáng xanh lá cây đứng trước nhãn */
 .status-live-dot::before {
-    content: '';
-    display: inline-block;
-    width: 6px;
-    height: 6px;
-    background-color: var(--accent-green);
-    border-radius: 50%;
-    box-shadow: 0 0 6px var(--accent-green);
+    content: '';                                                    /* Phần tử giả không có chữ */
+    display: inline-block;                                          /* Định dạng khối nội dòng */
+    width: 6px;                                                     /* Đường kính 6px */
+    height: 6px;                                                    /* Đường kính 6px */
+    background-color: var(--accent-green);                           /* Màu nền xanh lá */
+    border-radius: 50%;                                             /* Tròn tuyệt đối */
+    box-shadow: 0 0 6px var(--accent-green);                        /* Hào quang phát sáng xanh lá */
 }
 
-/* Grids for Metrics */
+/* =================================================================================
+   5. HỆ THỐNG PHÂN BỐ LƯỚI THẺ SỐ LIỆU (GRIDS FOR METRIC CARDS)
+   ================================================================================= */
+
+/* Lưới hiển thị Telemetry chiến lược: chia đều 4 cột ngang ở màn hình desktop rộng */
 .telemetry-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
+    display: grid;                                                  /* Kích hoạt CSS Grid */
+    grid-template-columns: repeat(4, 1fr);                          /* Tạo 4 cột có độ rộng bằng nhau (1fr) */
+    gap: 16px;                                                      /* Khoảng giãn cách giữa các ô lưới là 16px */
 }
 
+/* Lưới hiển thị Ticker cổ phiếu bán dẫn: chia đều 3 cột ngang */
 .tickers-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
+    display: grid;                                                  /* Kích hoạt CSS Grid */
+    grid-template-columns: repeat(3, 1fr);                          /* Tạo 3 cột bằng nhau */
+    gap: 16px;                                                      /* Khoảng giãn cách giữa các ô lưới */
 }
 
+/* Điều chỉnh lưới cho các màn hình có độ rộng từ 1200px trở xuống */
+@media (max-width: 1200px) {
+    .telemetry-grid {
+        grid-template-columns: repeat(2, 1fr);                      /* Thu lại thành lưới 2 hàng x 2 cột (2x2) */
+    }
+}
+
+/* Điều chỉnh lưới cho thiết bị màn hình di động nhỏ (dưới 768px) */
 @media (max-width: 768px) {
     .telemetry-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr;                                 /* Chuyển thành xếp dọc 1 cột duy nhất */
     }
     .tickers-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr;                                 /* Chuyển thành xếp dọc 1 cột duy nhất */
     }
 }
 
-/* KPI Metric Card Glassmorphism */
+/* =================================================================================
+   6. CHI TIẾT THẺ SỐ LIỆU (KPI METRIC CARD GLASSMORPHISM)
+   ================================================================================= */
 .metric-card {
-    background: rgba(255, 255, 255, 0.012);
-    border: 1px solid var(--border-color);
-    border-radius: 16px;
-    padding: 16px;
-    display: flex;
+    background: rgba(255, 255, 255, 0.012);                         /* Nền gương đen siêu mờ nhạt */
+    border: 1px solid var(--border-color);                          /* Viền phản chiếu mỏng */
+    border-radius: 16px;                                            /* Bo góc thẻ card */
+    padding: 16px;                                                  /* Đệm trong thẻ 16px */
+    display: flex;                                                  /* Khai báo Flexbox sắp xếp nội dung dọc */
     flex-direction: column;
-    gap: 8px;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    gap: 8px;                                                       /* Khoảng giãn dọc các dòng */
+    position: relative;                                             /* Xác lập điểm gốc tọa độ cho các phần tử con tuyệt đối */
+    overflow: hidden;                                               /* Cắt các chi tiết lồi ra ngoài thẻ card */
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease; /* Chuyển động mượt mà khi hover */
 }
 
+/* Hiệu ứng nhấc nhẹ thẻ và phát sáng viền Cyan khi rê chuột qua */
 .metric-card:hover {
-    transform: translateY(-2px);
-    border-color: rgba(0, 240, 255, 0.2);
-    box-shadow: 0 8px 24px rgba(0, 240, 255, 0.06);
+    transform: translateY(-2px);                                    /* Nhấc nhẹ thẻ lên trên 2px */
+    border-color: rgba(0, 240, 255, 0.2);                           /* Tăng độ sáng viền xanh ngọc */
+    box-shadow: 0 8px 24px rgba(0, 240, 255, 0.06);                  /* Đổ bóng phát sáng mờ ảo */
 }
 
-/* Different glows for telemetry vs stocks */
+/* Phông phản sáng chìm chạy góc trên bên phải thẻ */
 .card-glow {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    position: absolute;                                             /* Định vị tuyệt đối */
+    top: 0;                                                         /* Căn đỉnh */
+    left: 0;                                                        /* Căn trái */
+    width: 100%;                                                    /* Phủ rộng */
+    height: 100%;                                                   /* Phủ cao */
+    /* Tạo chùm sáng tròn chuyển mờ Cyan */
     background: radial-gradient(circle at 100% 0%, rgba(0, 240, 255, 0.05) 0%, transparent 50%);
-    pointer-events: none;
+    pointer-events: none;                                           /* Tránh cản trở chuột bấm */
 }
 
+/* Bóng phản sáng tím Neon cho riêng các thẻ báo giá cổ phiếu */
 .stock-card .card-glow {
     background: radial-gradient(circle at 100% 0%, rgba(189, 0, 255, 0.05) 0%, transparent 50%);
 }
 
 .card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    display: flex;                                                  /* Căn ngang */
+    justify-content: space-between;                                 /* Dồn tag sang trái, status sang phải */
+    align-items: center;                                            /* Căn dọc */
 }
 
+/* Nhãn danh mục chỉ số */
 .category-tag {
-    font-size: 0.65rem;
-    text-transform: uppercase;
-    font-weight: 700;
-    padding: 3px 6px;
-    border-radius: 4px;
-    letter-spacing: 0.5px;
+    font-size: 0.65rem;                                             /* Chữ siêu nhỏ */
+    text-transform: uppercase;                                      /* In hoa */
+    font-weight: 700;                                               /* In đậm */
+    padding: 3px 6px;                                               /* Đệm dọc 3px, ngang 6px */
+    border-radius: 4px;                                             /* Bo tròn nhẹ góc tag */
+    letter-spacing: 0.5px;                                          /* Khoảng giãn chữ */
 }
 
-.category-tag.supply { background: rgba(0, 240, 255, 0.1); color: var(--accent-cyan); }
-.category-tag.capacity { background: rgba(0, 255, 102, 0.1); color: var(--accent-green); }
-.category-tag.financial { background: rgba(255, 196, 0, 0.1); color: var(--accent-yellow); }
-.category-tag.stock { background: rgba(189, 0, 255, 0.1); color: var(--accent-purple); }
+/* Màu nền & Chữ của các tag phân loại chỉ số */
+.category-tag.supply { background: rgba(0, 240, 255, 0.1); color: var(--accent-cyan); }        /* Chuỗi cung ứng (Xanh Cyan) */
+.category-tag.capacity { background: rgba(0, 255, 102, 0.1); color: var(--accent-green); }     /* Năng lực sản xuất (Xanh lá) */
+.category-tag.financial { background: rgba(255, 196, 0, 0.1); color: var(--accent-yellow); }   /* Tài chính (Vàng) */
+.category-tag.stock { background: rgba(189, 0, 255, 0.1); color: var(--accent-purple); }       /* Cổ phiếu (Tím) */
 
+/* Phân loại thẻ trạng thái số liệu */
 .status-tag {
     font-size: 0.72rem;
     font-weight: 700;
     letter-spacing: 0.5px;
 }
 
-.status-tag.growing { color: var(--accent-cyan); }
-.status-tag.stable { color: var(--accent-green); }
-.status-tag.declining { color: var(--accent-yellow); }
-.status-tag.critical { color: var(--accent-red); }
+.status-tag.growing { color: var(--accent-cyan); }                  /* Tăng trưởng */
+.status-tag.stable { color: var(--accent-green); }                  /* Ổn định */
+.status-tag.declining { color: var(--accent-yellow); }              /* Suy giảm */
+.status-tag.critical { color: var(--accent-red); }                  /* Nguy cấp */
 
 h3 {
     font-size: 0.88rem;
@@ -314,19 +388,22 @@ h3 {
     color: var(--text-muted);
 }
 
+/* Khung chứa số liệu lớn trung tâm */
 .main-val {
-    display: flex;
-    align-items: baseline;
-    gap: 4px;
-    margin: 4px 0;
+    display: flex;                                                  /* Căn ngang */
+    align-items: baseline;                                          /* Căn chân các chữ cái đều nhau */
+    gap: 4px;                                                       /* Khoảng cách giữa giá trị và đơn vị */
+    margin: 4px 0;                                                  /* Khoảng giãn dọc */
 }
 
+/* Định dạng ký tự ký hiệu tiền tệ $ */
 .main-val .currency {
     font-size: 1.1rem;
     color: var(--text-muted);
     font-family: 'Orbitron', sans-serif;
 }
 
+/* Trị số đo lường chính hiển thị bằng phông chữ công nghệ Orbitron lớn phát sáng */
 .main-val .value {
     font-family: 'Orbitron', sans-serif;
     font-size: 1.75rem;
@@ -340,12 +417,12 @@ h3 {
 }
 
 .card-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-top: 1px solid rgba(255, 255, 255, 0.03);
-    padding-top: 10px;
-    margin-top: auto;
+    display: flex;                                                  /* Căn ngang */
+    justify-content: space-between;                                 /* Đẩy tỉ lệ thay đổi sang trái, SD/N sang phải */
+    align-items: center;                                            /* Căn dọc */
+    border-top: 1px solid rgba(255, 255, 255, 0.03);                /* Đường gạch ngang cực nhạt phía trên */
+    padding-top: 10px;                                              /* Khoảng đệm trên gạch ngang */
+    margin-top: auto;                                               /* Buộc footer luôn nằm sát đáy card */
     font-size: 0.75rem;
 }
 
@@ -353,9 +430,10 @@ h3 {
     font-weight: 700;
 }
 
-.change-rate.positive { color: var(--accent-green); }
-.change-rate.negative { color: var(--accent-red); }
-.change-rate.neutral { color: var(--text-muted); }
+/* Định dạng màu sắc tỷ số thay đổi */
+.change-rate.positive { color: var(--accent-green); }               /* Tỷ lệ tăng (Xanh lá) */
+.change-rate.negative { color: var(--accent-red); }                 /* Tỷ lệ giảm (Đỏ) */
+.change-rate.neutral { color: var(--text-muted); }                  /* Tỷ lệ đứng im (Xám) */
 
 .stats-box {
     display: flex;
@@ -367,55 +445,57 @@ h3 {
     color: var(--text-main);
 }
 
-/* Card Update Flashing Animations */
+/* =================================================================================
+   7. HOẠT HỌA CHỚP VIỀN KHI CẬP NHẬT DỮ LIỆU (CARD FLASH ANIMATIONS)
+   ================================================================================= */
 .metric-card.flash-up {
-    animation: flash-green-kpi 0.8s ease;
+    animation: flash-green-kpi 0.8s ease;                           /* Gọi hiệu ứng nhấp nháy xanh lá trong 0.8 giây */
 }
 
 .metric-card.flash-down {
-    animation: flash-red-kpi 0.8s ease;
+    animation: flash-red-kpi 0.8s ease;                             /* Gọi hiệu ứng nhấp nháy đỏ trong 0.8 giây */
 }
 
-/* Performance Chart & Oscilloscope Wave */
+/* =================================================================================
+   8. KHUNG CHỨA TRỰC QUAN HÓA (CHARTS & HEARTBEAT WAVE BOX)
+   ================================================================================= */
 .chart-container {
-    height: 320px;
-    width: 100%;
-    margin-bottom: 12px;
+    height: 320px;                                                  /* Chiều cao của biểu đồ Chart.js */
+    width: 100%;                                                    /* Chiếm trọn 100% chiều rộng cột */
+    margin-bottom: 12px;                                            /* Khoảng giãn dưới */
 }
 
+/* Khung hộp chứa biểu đồ sóng nhịp tim EKG */
 .wave-box {
-    height: 60px;
-    background: rgba(0, 0, 0, 0.15);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    position: relative;
-    overflow: hidden;
+    height: 60px;                                                   /* Chiều cao hộp sóng là 60px */
+    background: rgba(0, 0, 0, 0.15);                                /* Màu nền đen mờ mỏng */
+    border: 1px solid var(--border-color);                          /* Viền phản chiếu mỏng */
+    border-radius: 12px;                                            /* Bo góc hộp sóng */
+    position: relative;                                             /* Xác lập điểm neo */
+    overflow: hidden;                                               /* Cắt các chi tiết lồi ra ngoài hộp */
 }
 
 #pulse-wave {
     width: 100%;
     height: 100%;
-    display: block;
+    display: block;                                                 /* Định dạng hiển thị dạng block tránh lỗi khoảng trống inline */
 }
 
-/* Sidebar panels are naturally stacked inside .column-right */
-
+/* =================================================================================
+   9. BỘ NHẬP LIỆU & BIỂU MẪU GIẢ LẬP (INPUTS, FORMS & GLOW BUTTONS)
+   ================================================================================= */
 .form-wrapper {
-    background: rgba(255, 255, 255, 0.01);
-    border: 1px solid var(--border-color);
-    border-radius: 16px;
-    padding: 18px;
+    background: rgba(255, 255, 255, 0.01);                          /* Nền mờ cực mỏng */
+    border: 1px solid var(--border-color);                          /* Viền kính mỏng */
+    border-radius: 16px;                                            Bo góc hộp nhập liệu */
+    padding: 18px;                                                  Khoảng đệm trong */
 }
 
 .form-group {
-    margin-bottom: 14px;
+    margin-bottom: 14px;                                            /* Khoảng cách giữa các ô nhập là 14px */
     display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.form-group-col {
-    flex: 1;
+    flex-direction: column;                                         /* Nhãn bên trên, ô nhập bên dưới */
+    gap: 5px;                                                       /* Cách nhau 5px */
 }
 
 label {
@@ -426,21 +506,23 @@ label {
     letter-spacing: 0.5px;
 }
 
+/* Ô chọn dropdown và ô nhập số liệu dạng khối hộp tối */
 select, input {
-    background: rgba(0, 0, 0, 0.25);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 10px 12px;
-    font-family: inherit;
-    color: #fff;
-    font-size: 0.88rem;
-    outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
+    background: rgba(0, 0, 0, 0.25);                                /* Nền đen mờ mỏng */
+    border: 1px solid var(--border-color);                          /* Viền mỏng */
+    border-radius: 8px;                                             /* Bo góc nhẹ */
+    padding: 10px 12px;                                             /* Đệm trong ô */
+    font-family: inherit;                                           /* Kế thừa phông chữ từ trang */
+    color: #fff;                                                    /* Màu chữ nhập vào là trắng */
+    font-size: 0.88rem;                                             /* Cỡ chữ */
+    outline: none;                                                  /* Khử viền xanh mặc định của trình duyệt */
+    transition: border-color 0.2s, box-shadow 0.2s;                 /* Chuyển động mượt khi focus */
 }
 
+/* Hiệu ứng phát sáng viền Cyan khi người dùng click nhập liệu */
 select:focus, input:focus {
-    border-color: var(--accent-cyan);
-    box-shadow: 0 0 8px rgba(0, 240, 255, 0.15);
+    border-color: var(--accent-cyan);                               /* Đổi màu viền sang xanh Cyan */
+    box-shadow: 0 0 8px rgba(0, 240, 255, 0.15);                    /* Đổ bóng phát sáng mờ quanh ô */
 }
 
 .input-container {
@@ -451,67 +533,68 @@ select:focus, input:focus {
 
 .input-container input {
     width: 100%;
-    padding-right: 70px;
+    padding-right: 70px;                                            /* Dành khoảng trống hiển thị đơn vị bên phải */
 }
 
+/* Nhãn hiển thị đơn vị gắn trong ô nhập */
 .input-unit {
-    position: absolute;
-    right: 12px;
+    position: absolute;                                             /* Định vị tuyệt đối đè lên input */
+    right: 12px;                                                    /* Cách lề phải ô nhập 12px */
     font-size: 0.78rem;
     color: var(--text-muted);
 }
 
+/* Hộp trạng thái bảo mật của bộ giả lập */
 .auth-box {
-    background: rgba(0, 0, 0, 0.15);
+    background: rgba(0, 0, 0, 0.15);                                /* Nền tối */
     border: 1px solid var(--border-color);
     border-radius: 8px;
     padding: 12px;
     margin-bottom: 14px;
 }
 
+/* Tiêu đề thanh trạng thái an ninh bảo mật */
 .auth-hdr {
-    display: flex;
-    justify-content: space-between;
+    display: flex;                                                  /* Căn ngang */
+    justify-content: space-between;                                 /* Đẩy tiêu đề trái, badge phải */
     font-size: 0.68rem;
     font-weight: 700;
-    color: var(--accent-purple);
+    color: var(--accent-purple);                                    /* Màu chữ tím Neon */
     margin-bottom: 8px;
 }
 
 .secure-badge {
-    color: var(--accent-green);
+    color: var(--accent-green);                                     /* Huy hiệu hợp lệ màu xanh lá */
 }
 
-.auth-row {
-    display: flex;
-    gap: 12px;
-}
-
+/* Nút nhấn lớn phát sáng chuyển Gradient (POST TELEMETRY POINT) */
 .glow-button {
-    width: 100%;
-    background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
-    border: none;
-    border-radius: 8px;
-    padding: 12px;
-    color: #fff;
-    font-family: 'Orbitron', sans-serif;
+    width: 100%;                                                    /* Giãn rộng hết cỡ biểu mẫu */
+    background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple)); /* Gradient chuyển màu Cyan -> Tím */
+    border: none;                                                   /* Xóa viền nút mặc định */
+    border-radius: 8px;                                             /* Bo góc nút */
+    padding: 12px;                                                  /* Đệm trong nút rộng rãi */
+    color: #fff;                                                    /* Chữ màu trắng */
+    font-family: 'Orbitron', sans-serif;                            /* Phông chữ công nghệ */
     font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    cursor: pointer;
-    box-shadow: 0 4px 14px rgba(0, 240, 255, 0.12);
-    transition: box-shadow 0.2s ease, transform 0.1s ease;
+    font-weight: 700;                                               /* In đậm */
+    letter-spacing: 1.5px;                                          /* Khoảng giãn chữ rộng */
+    cursor: pointer;                                                /* Biến trỏ chuột thành hình bàn tay */
+    box-shadow: 0 4px 14px rgba(0, 240, 255, 0.12);                 /* Đổ bóng Neon nhẹ mặc định */
+    transition: box-shadow 0.2s ease, transform 0.1s ease;          /* Chuyển động nhấn mượt */
 }
 
+/* Tăng cường bóng phát quang rực rỡ khi di chuột qua nút */
 .glow-button:hover {
     box-shadow: 0 4px 20px rgba(0, 240, 255, 0.25);
 }
 
+/* Thu nhỏ nhẹ nút tạo phản hồi bấm khi click */
 .glow-button:active {
     transform: scale(0.98);
 }
 
-/* Alert boxes */
+/* Hộp thoại thông báo nổi trạng thái gửi */
 .alert-box {
     margin-top: 12px;
     padding: 8px 12px;
@@ -519,12 +602,14 @@ select:focus, input:focus {
     font-size: 0.78rem;
 }
 
+/* Trạng thái gửi thành công (Xanh lá mờ viền sáng) */
 .alert-box.success {
     background: rgba(0, 255, 102, 0.08);
     color: var(--accent-green);
     border: 1px solid rgba(0, 255, 102, 0.15);
 }
 
+/* Trạng thái gửi thất bại / lỗi (Đỏ mờ) */
 .alert-box.error {
     background: rgba(255, 0, 85, 0.08);
     color: var(--accent-red);
@@ -532,53 +617,61 @@ select:focus, input:focus {
 }
 
 .alert-box.hide {
-    display: none;
+    display: none;                                                  /* Ẩn hoàn toàn thẻ khỏi màn hình */
 }
 
-/* Console diagnostics logger box */
+/* =================================================================================
+   10. KHUNG NHẬT KÝ CHẨN ĐOÁN (DIAGNOSTIC CONSOLE TERMINAL)
+   ================================================================================= */
 .console-panel {
     display: flex;
     flex-direction: column;
 }
 
 .btn-text {
-    background: none;
-    border: none;
-    color: var(--text-muted);
+    background: none;                                               /* Khử nền nút */
+    border: none;                                                   /* Khử viền nút */
+    color: var(--text-muted);                                       /* Chữ màu xám xanh mờ */
     font-size: 0.75rem;
     cursor: pointer;
     font-family: 'Courier New', Courier, monospace;
 }
 
 .btn-text:hover {
-    color: var(--accent-cyan);
+    color: var(--accent-cyan);                                      /* Đổi chữ sang Cyan khi hover */
 }
 
+/* Khung chứa các dòng log chẩn đoán dạng Terminal tối */
 .console-body {
-    background: rgba(0, 0, 0, 0.35);
-    border: 1px solid var(--border-color);
+    background: rgba(0, 0, 0, 0.35);                                /* Nền đen sẫm che phủ */
+    border: 1px solid var(--border-color);                          /* Viền */
     border-radius: 16px;
     padding: 14px;
-    overflow-y: auto;
+    overflow-y: auto;                                               /* Hiện thanh cuộn đứng khi log tràn khung */
     display: flex;
     flex-direction: column;
     gap: 6px;
-    height: 236px;
-    font-family: 'Courier New', Courier, monospace;
+    height: 236px;                                                  /* Chiều cao cố định 236px */
+    font-family: 'Courier New', Courier, monospace;                 /* Phông chữ lập trình đặc trưng */
     font-size: 0.75rem;
 }
 
 .log-line {
     color: var(--text-main);
-    word-break: break-all;
+    word-break: break-all;                                          /* Tự bẻ dòng nếu chuỗi quá dài tránh tràn ngang */
 }
 
-.log-line.system { color: var(--accent-purple); }
-.log-line.incoming { color: var(--accent-cyan); }
-.log-line.success { color: var(--accent-green); }
-.log-line.error { color: var(--accent-red); }
+/* Định nghĩa bảng màu trực quan cho các dòng thông báo chẩn đoán */
+.log-line.system { color: var(--accent-purple); }                  /* Chỉ thị hệ thống (Màu Tím) */
+.log-line.incoming { color: var(--accent-cyan); }                  /* Gói dữ liệu đến (Màu Cyan) */
+.log-line.success { color: var(--accent-green); }                  /* Xử lý thành công (Xanh lá) */
+.log-line.error { color: var(--accent-red); }                      /* Báo động lỗi (Đỏ) */
 
-/* Animation Keyframes */
+/* =================================================================================
+   11. HOẠT HỌA HIỆU ỨNG (ANIMATION KEYFRAMES)
+   ================================================================================= */
+
+/* Vòng tròn lan tỏa phát quang thở Neon của logo */
 @keyframes ring-pulse-anim {
     0% {
         box-shadow: 0 0 0 0 rgba(0, 240, 255, 0.6), 0 0 0 0 rgba(0, 240, 255, 0.3);
@@ -591,6 +684,7 @@ select:focus, input:focus {
     }
 }
 
+/* Hiệu ứng chớp Neon xanh khi cập nhật tăng chỉ số (vẽ hào quang rồi mờ dần) */
 @keyframes flash-green-kpi {
     0% {
         background: rgba(0, 255, 102, 0.1);
@@ -604,6 +698,7 @@ select:focus, input:focus {
     }
 }
 
+/* Hiệu ứng chớp Neon đỏ khi cập nhật giảm chỉ số */
 @keyframes flash-red-kpi {
     0% {
         background: rgba(255, 0, 85, 0.1);
@@ -617,7 +712,9 @@ select:focus, input:focus {
     }
 }
 
-/* Auth Header & Modal Styling */
+/* =================================================================================
+   12. QUẢN LÝ GIAO DIỆN TÀI KHOẢN & POPUP MODAL ĐĂNG NHẬP
+   ================================================================================= */
 .header-right {
     display: flex;
     align-items: center;
@@ -630,6 +727,7 @@ select:focus, input:focus {
     gap: 12px;
 }
 
+/* Nút bấm nhỏ góc trên bên phải header */
 .btn-glow-small {
     background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));
     border: none;
@@ -651,6 +749,7 @@ select:focus, input:focus {
     transform: translateY(-1px);
 }
 
+/* Nút viền tím mờ dạng Outline */
 .btn-glow-small.outline {
     background: transparent;
     border: 1px solid var(--accent-purple);
@@ -664,6 +763,7 @@ select:focus, input:focus {
     color: #fff;
 }
 
+/* Huy hiệu hiển thị tài khoản đã đăng nhập */
 .user-badge {
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid var(--border-color);
@@ -680,6 +780,7 @@ select:focus, input:focus {
     color: var(--text-main);
 }
 
+/* Nhãn biểu thị vai trò tài khoản (Role Tag) */
 .user-role-tag {
     font-size: 0.65rem;
     text-transform: uppercase;
@@ -689,10 +790,12 @@ select:focus, input:focus {
     letter-spacing: 0.5px;
 }
 
-.user-role-tag.admin { background: rgba(255, 0, 85, 0.15); color: var(--accent-red); border: 1px solid rgba(255, 0, 85, 0.25); }
-.user-role-tag.iotdevice { background: rgba(0, 255, 102, 0.15); color: var(--accent-green); border: 1px solid rgba(0, 255, 102, 0.25); }
-.user-role-tag.user { background: rgba(0, 240, 255, 0.15); color: var(--accent-cyan); border: 1px solid rgba(0, 240, 255, 0.25); }
+/* Màu sắc nhãn vai trò phân cấp an ninh */
+.user-role-tag.admin { background: rgba(255, 0, 85, 0.15); color: var(--accent-red); border: 1px solid rgba(255, 0, 85, 0.25); }         /* Admin (Đỏ) */
+.user-role-tag.iotdevice { background: rgba(0, 255, 102, 0.15); color: var(--accent-green); border: 1px solid rgba(0, 255, 102, 0.25); } /* IoT Device (Xanh lá) */
+.user-role-tag.user { background: rgba(0, 240, 255, 0.15); color: var(--accent-cyan); border: 1px solid rgba(0, 240, 255, 0.25); }       /* User (Cyan) */
 
+/* Nút bấm Đăng xuất */
 .btn-signout {
     background: transparent;
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -711,7 +814,7 @@ select:focus, input:focus {
     box-shadow: 0 0 10px rgba(255, 0, 85, 0.1);
 }
 
-/* Modal Overlay */
+/* Lớp phủ làm mờ toàn màn hình của Popup Modal */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -719,7 +822,7 @@ select:focus, input:focus {
     width: 100vw;
     height: 100vh;
     background: rgba(4, 6, 12, 0.75);
-    backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);                                      /* Làm nhòe toàn bộ giao diện web dưới lớp phủ */
     z-index: 1000;
     display: flex;
     justify-content: center;
@@ -734,7 +837,7 @@ select:focus, input:focus {
     pointer-events: none;
 }
 
-/* Modal Container */
+/* Hộp Modal chứa Form đăng nhập */
 .modal-container {
     background: rgba(10, 15, 29, 0.85);
     border: 1px solid var(--border-color);
@@ -746,13 +849,14 @@ select:focus, input:focus {
     position: relative;
     transform: translateY(0);
     transition: transform 0.3s ease;
-    animation: modal-slide-down 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    animation: modal-slide-down 0.3s cubic-bezier(0.16, 1, 0.3, 1);  /* Hiệu ứng trượt nhẹ từ trên xuống khi xuất hiện */
 }
 
 .modal-overlay.hide .modal-container {
     transform: translateY(-20px);
 }
 
+/* Hoạt họa trượt hộp thoại từ trên xuống */
 @keyframes modal-slide-down {
     from {
         transform: translateY(-30px);
@@ -764,6 +868,7 @@ select:focus, input:focus {
     }
 }
 
+/* Nút chéo X đóng cửa sổ */
 .modal-close {
     position: absolute;
     top: 20px;
@@ -778,7 +883,7 @@ select:focus, input:focus {
     color: var(--accent-cyan);
 }
 
-/* Auth Tabs */
+/* Thanh Tab Đăng Nhập / Đăng Ký trong modal */
 .auth-tabs {
     display: flex;
     border-bottom: 1px solid var(--border-color);
@@ -804,6 +909,7 @@ select:focus, input:focus {
     color: #fff;
 }
 
+/* Tab hoạt động: chữ Cyan và có gạch chân Gradient phát sáng */
 .auth-tab-btn.active {
     color: var(--accent-cyan);
 }
@@ -819,7 +925,6 @@ select:focus, input:focus {
     box-shadow: 0 0 8px var(--accent-cyan);
 }
 
-/* Auth Form */
 .auth-form {
     display: flex;
     flex-direction: column;
@@ -830,7 +935,6 @@ select:focus, input:focus {
     display: none;
 }
 
-/* Simulator Messages */
 .simulator-auth-msg {
     font-size: 0.78rem;
     color: var(--text-muted);
@@ -848,7 +952,9 @@ select:focus, input:focus {
     border: 1px solid rgba(255, 0, 85, 0.2) !important;
 }
 
-/* Standalone Auth Pages */
+/* =================================================================================
+   13. TRANG ĐĂNG NHẬP / ĐĂNG KÝ ĐỘC LẬP (STANDALONE AUTH PAGES)
+   ================================================================================= */
 .auth-page {
     display: flex;
     justify-content: center;
@@ -874,6 +980,7 @@ select:focus, input:focus {
     gap: 12px;
 }
 
+/* Khung card nhập đăng nhập độc lập hiệu ứng kính mờ Neon */
 .auth-card {
     background: var(--bg-card);
     backdrop-filter: blur(16px);
@@ -943,4 +1050,3 @@ select:focus, input:focus {
     color: #fff;
     text-decoration: none;
 }
-
