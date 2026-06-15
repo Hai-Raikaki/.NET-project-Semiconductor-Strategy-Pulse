@@ -16,7 +16,7 @@ This application acts as a real-time monitoring center for semiconductor supply 
 
 - The data does not reflect actual price movements of NVIDIA, TSMC, or the semiconductor industry.
 
-- To turn this into a live dashboard, integrate a financial data API (e.g., Yahoo Finance, Alpha Vantage, Polygon.io).
+- To turn this into a live dashboard, integrate a financial data API (Yahoo Finance, Alpha Vantage, Polygon.io).
 
 ---
 
