@@ -1,6 +1,6 @@
-/* =================================================================================
+/* 
     1. KHAI BÁO BIẾN THIẾT KẾ (CSS VARIABLES & TOKENS)
-   ================================================================================= */
+*/
 :root {
     /* Màu nền đen sâu nhất làm nền chính của trang */
     --bg-darkest: #060913;
@@ -28,9 +28,9 @@
     --accent-blue: #0088ff;      /* Màu xanh dương - Liên kết/Phụ trợ */
 }
 
-/* =================================================================================
+/* 
    2. THIẾT LẬP CƠ BẢN (BASE STYLING & BODY ELEMENTS)
-   ================================================================================= */
+*/
 body {
     background-color: var(--bg-darkest);                            /* Áp dụng màu nền tối sâu nhất */
     color: var(--text-main);                                        /* Đặt màu chữ mặc định toàn trang */
@@ -65,9 +65,9 @@ body {
     gap: 20px;                                                      /* Khoảng cách giữa các hàng con là 20px */
 }
 
-/* =================================================================================
+/* 
    3. THANH TIÊU ĐỀ TRÊN CÙNG (HEADER & BRAND ELEMENTS)
-   ================================================================================= */
+*/
 header {
     background: var(--bg-card);                                     /* Nền gương mờ kính trong suốt */
     backdrop-filter: blur(12px);                                    /* Làm mờ các chi tiết chạy phía sau kính */
@@ -158,9 +158,9 @@ h1 {
     border: 1px solid rgba(255, 0, 85, 0.2);                        /* Viền đỏ mỏng */
 }
 
-/* =================================================================================
+/*
    4. BỐ CỤC KHUNG DASHBOARD (DASHBOARD GRID/FLEX LAYOUT)
-   ================================================================================= */
+*/
 
 /* Khung bao layout ngoài cùng sắp xếp dọc */
 .dashboard-layout {
@@ -267,9 +267,9 @@ h1 {
     box-shadow: 0 0 6px var(--accent-green);                        /* Hào quang phát sáng xanh lá */
 }
 
-/* =================================================================================
+/*
    5. HỆ THỐNG PHÂN BỐ LƯỚI THẺ SỐ LIỆU (GRIDS FOR METRIC CARDS)
-   ================================================================================= */
+*/
 
 /* Lưới hiển thị Telemetry chiến lược: chia đều 4 cột ngang ở màn hình desktop rộng */
 .telemetry-grid {
@@ -302,9 +302,9 @@ h1 {
     }
 }
 
-/* =================================================================================
+/*
    6. CHI TIẾT THẺ SỐ LIỆU (KPI METRIC CARD GLASSMORPHISM)
-   ================================================================================= */
+*/
 .metric-card {
     background: rgba(255, 255, 255, 0.012);                         /* Nền gương đen siêu mờ nhạt */
     border: 1px solid var(--border-color);                          /* Viền phản chiếu mỏng */
@@ -445,9 +445,9 @@ h3 {
     color: var(--text-main);
 }
 
-/* =================================================================================
+/* 
    7. HOẠT HỌA CHỚP VIỀN KHI CẬP NHẬT DỮ LIỆU (CARD FLASH ANIMATIONS)
-   ================================================================================= */
+*/
 .metric-card.flash-up {
     animation: flash-green-kpi 0.8s ease;                           /* Gọi hiệu ứng nhấp nháy xanh lá trong 0.8 giây */
 }
@@ -481,9 +481,9 @@ h3 {
     display: block;                                                 /* Định dạng hiển thị dạng block tránh lỗi khoảng trống inline */
 }
 
-/* =================================================================================
+/* 
    9. BỘ NHẬP LIỆU & BIỂU MẪU GIẢ LẬP (INPUTS, FORMS & GLOW BUTTONS)
-   ================================================================================= */
+*/
 .form-wrapper {
     background: rgba(255, 255, 255, 0.01);                          /* Nền mờ cực mỏng */
     border: 1px solid var(--border-color);                          /* Viền kính mỏng */
@@ -620,9 +620,9 @@ select:focus, input:focus {
     display: none;                                                  /* Ẩn hoàn toàn thẻ khỏi màn hình */
 }
 
-/* =================================================================================
+/*
    10. KHUNG NHẬT KÝ CHẨN ĐOÁN (DIAGNOSTIC CONSOLE TERMINAL)
-   ================================================================================= */
+*/
 .console-panel {
     display: flex;
     flex-direction: column;
@@ -667,9 +667,9 @@ select:focus, input:focus {
 .log-line.success { color: var(--accent-green); }                  /* Xử lý thành công (Xanh lá) */
 .log-line.error { color: var(--accent-red); }                      /* Báo động lỗi (Đỏ) */
 
-/* =================================================================================
+/*
    11. HOẠT HỌA HIỆU ỨNG (ANIMATION KEYFRAMES)
-   ================================================================================= */
+*/
 
 /* Vòng tròn lan tỏa phát quang thở Neon của logo */
 @keyframes ring-pulse-anim {
@@ -712,9 +712,9 @@ select:focus, input:focus {
     }
 }
 
-/* =================================================================================
+/* 
    12. QUẢN LÝ GIAO DIỆN TÀI KHOẢN & POPUP MODAL ĐĂNG NHẬP
-   ================================================================================= */
+*/
 .header-right {
     display: flex;
     align-items: center;
@@ -952,9 +952,9 @@ select:focus, input:focus {
     border: 1px solid rgba(255, 0, 85, 0.2) !important;
 }
 
-/* =================================================================================
+/*
    13. TRANG ĐĂNG NHẬP / ĐĂNG KÝ ĐỘC LẬP (STANDALONE AUTH PAGES)
-   ================================================================================= */
+*/
 .auth-page {
     display: flex;
     justify-content: center;
