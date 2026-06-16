@@ -252,7 +252,7 @@ I followed a strict chronological sequence to build this project from an empty d
   - Set up a SignalR Hub (`MarketHub`) and a background market price generator service to broadcast simulated stocks every 2 seconds.
   - Implemented the persistent, keep-alive SSE stream endpoint `/api/pulse/stream` in `PulseController`.
 * **Step 9: Responsive UI & Glassmorphism Design**
-  - Hand-crafted `index.html` dividing the layout into left column (Visual metrics and charts) and right column (Controls and logger consoles).
+  - Hand-crafted `index.html` dividing the layout into a top section (full-width metric and stock grids) and a bottom split row (Visualization Hub on the left, next to the Ingestion Simulator and Console on the right).
   - Coded `style.css` implementing HSL neon colors, custom canvas sizes, and CSS media queries to collapse columns and grids on smaller viewports.
 * **Step 10: Client JS Event Handlers & Session Interceptors**
   - Coded `app.js` to parse incoming SSE/WebSocket JSON and update KPI cards.
@@ -363,7 +363,7 @@ Here is a detailed breakdown of the files I wrote, explaining their specific res
 * **[Services/IngestionService.cs](/Services/IngestionService.cs)**: Provides a gateway service to write telemetry data to the in-memory bounded queue.
 
 ### 🌐 Frontend Client Interface
-* **[wwwroot/index.html](/wwwroot/index.html)**: The HTML layout of the main dashboard, structured into visual analysis columns (left) and ingestion simulator consoles (right).
+* **[wwwroot/index.html](/wwwroot/index.html)**: The HTML layout of the main dashboard, structured into full-width top grids (Strategic Telemetry and Stock Tickers) and a bottom section placing the visualization engines next to the ingestion controls.
 * **[wwwroot/style.css](/wwwroot/style.css)**: The custom CSS stylesheet that creates a translucent glassmorphic look with neon accent glows, and defines media query rules for mobile styling.
 * **[wwwroot/app.js](/wwwroot/app.js)**: The core client script. It listens to WebSocket and SSE streams, handles Chart.js and wave drawings, and wraps all fetch operations in automatic token refresh interceptors.
 * **[wwwroot/login.html](/wwwroot/login.html) & [wwwroot/register.html](/wwwroot/register.html)**: Monolithic glassmorphic forms for signing in and creating accounts.
@@ -384,8 +384,13 @@ Here is a detailed breakdown of the files I wrote, explaining their specific res
    ```
 2. Once the backend server starts, open your browser and navigate to:
    - **http://localhost:5107/**
+   - 
+### 3. API Documentation (OpenAPI Spec)
+- In Development mode, the application auto-generates native OpenAPI documentation.
+- You can access the raw OpenAPI spec schema at: **http://localhost:5107/openapi/v1.json**
+- You can import this JSON file into **Postman**, **Swagger Editor**, or **Scalar** to explore and test the RESTful API endpoints.
 
-### 3. Verification Sequence
+### 4. Verification Sequence
 - **Login Verification**: Click **Sign In** and login with email `admin@pulse.com` and password `Admin123`. Verify the Ingestion status bar turns green (**AUTHORIZED**).
 - **Ingestion & Streaming Verification**: Select *Yield Rate*, enter value `94.5`, and click **POST TELEMETRY POINT**. Observe:
   1. The "Advanced Node Yield Rate" KPI card immediately flashes green.
