@@ -41,7 +41,7 @@ try
 
     // 1. Cấu hình Connection Pooling với PostgreSQL nhằm tái sử dụng các kết nối tối ưu hiệu năng
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") 
-        ?? "Host=127.0.0.1;Port=5432;Database=postgres;Username=postgres;Password=0123;Pooling=true;Minimum Pool Size=5;Maximum Pool Size=100;";
+        ?? "Host=127.0.0.1;Port=5432;Database= ;Username= ;Password= ;Pooling=true;Minimum Pool Size=5;Maximum Pool Size=100;";
     Log.Information("Loaded ConnectionString: {ConnectionString}", connectionString); // Ghi log chuỗi kết nối
     
     // Đăng ký DbContext với cơ chế Connection Pool
@@ -196,10 +196,10 @@ try
         });
     });
 
-    // Cấu hình Swagger / OpenAPI phục vụ tài liệu API
+    // Đăng ký dịch vụ OpenAPI vào Dependency Injection container của ASP.NET Core. Đây là cách mới (.NET 9+) để tạo tài liệu API, thay thế cho AddSwaggerGen() truyền thống.
     builder.Services.AddOpenApi(options =>
     {
-        options.AddDocumentTransformer((document, context, cancellationToken) =>
+        options.AddDocumentTransformer((document, context, cancellationToken) => //Thêm một transformer - hàm có nhiệm vụ chỉnh sửa tài liệu OpenAPI trước khi xuất ra.
         {
             document.Info.Title = "Semiconductor Strategy Pulse RESTful API"; // Tiêu đề trang tài liệu API
             document.Info.Version = "v1.0.0"; // Phiên bản API
