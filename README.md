@@ -396,7 +396,9 @@ Here is a detailed breakdown of the files I wrote, explaining their specific res
 
 ### 4. Verification Sequence
 - **Login Verification**: Click **Sign In** and login with email `admin@pulse.com` and password `Admin123` password. Verify the Ingestion status bar turns green (**AUTHORIZED**).
-`**⚠️ The email, username and password in this project are used for DEMO only. Do not use in production.**`
+
+####⚠️ The email, username and password in this project are used for DEMO only. Do not use in production.
+
 - **Ingestion & Streaming Verification**: Select *Yield Rate*, enter value `94.5`, and click **POST TELEMETRY POINT**. Observe:
   1. The "Advanced Node Yield Rate" KPI card immediately flashes green.
   2. The displayed value updates instantly to `94.50%`.
