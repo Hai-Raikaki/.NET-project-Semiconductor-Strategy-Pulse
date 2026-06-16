@@ -1,4 +1,4 @@
-# Semiconductor Strategy Pulse: My .NET Self-Learning Journey
+# Personal project: Semiconductor Strategy Pulse ASP.NET web app
 
 Welcome to my portfolio project! I built **Semiconductor Strategy Pulse** to push my skills beyond standard, basic CRUD tutorials. Instead of building another "To-Do list" app, I wanted to tackle complex, production-grade architectural challenges: thread-safe background processing, real-time client notifications, secure state-of-the-art token rotation, and beautiful responsive layouts.
 
