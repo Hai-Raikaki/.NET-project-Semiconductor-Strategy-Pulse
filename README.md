@@ -388,7 +388,7 @@ Here is a detailed breakdown of the files I wrote, explaining their specific res
    ```
 2. Once the backend server starts, open your browser and navigate to:
    - **http://localhost:5107/**
-   - 
+
 ### 3. API Documentation (OpenAPI Spec)
 - In Development mode, the application auto-generates native OpenAPI documentation.
 - You can access the raw OpenAPI spec schema at: **http://localhost:5107/openapi/v1.json**
