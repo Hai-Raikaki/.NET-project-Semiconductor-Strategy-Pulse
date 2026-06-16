@@ -2,7 +2,7 @@
 
 Welcome to my portfolio project! I built **Semiconductor Strategy Pulse** to push my skills beyond standard, basic CRUD tutorials. Instead of building another "To-Do list" app, I wanted to tackle complex, production-grade architectural challenges: thread-safe background processing, real-time client notifications, secure state-of-the-art token rotation, and beautiful responsive layouts.
 
-`**This project is a part of my self learning journey.**`
+`This project is a part of my self learning journey.`
 
 This application acts as a real-time monitoring center for semiconductor supply chains. It simulates live telemetry inputs (like chip yield rates and order backlogs) and stock price tickers, pushing them to a custom cyberpunk-themed dashboard without page refreshes.
 
