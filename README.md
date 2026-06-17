@@ -10,7 +10,7 @@ Duration: May 2026 to June 2026
 
 ---
 
-# ⚠️ Data Disclaimer
+# ⚠️ Important notes
 
 - This project is `a simulation for demonstration` purposes only and does not use real-time stock market data.
 
@@ -22,6 +22,7 @@ Duration: May 2026 to June 2026
 
 - To turn this into a live dashboard, integrate a financial data API (Yahoo Finance, Alpha Vantage, Polygon.io).
 
+- `⚠️ The email, username and password in this project are used for DEMO only. Do not use in production.`
 ---
 
 ## 🎯 What I Learned & Implemented (My Learning Goals)
@@ -396,8 +397,6 @@ Here is a detailed breakdown of the files I wrote, explaining their specific res
 
 ### 4. Verification Sequence
 - **Login Verification**: Click **Sign In** and login with email `admin@pulse.com` and password `Admin123` password. Verify the Ingestion status bar turns green (**AUTHORIZED**).
-
-`⚠️ The email, username and password in this project are used for DEMO only. Do not use in production.`
 
 - **Ingestion & Streaming Verification**: Select *Yield Rate*, enter value `94.5`, and click **POST TELEMETRY POINT**. Observe:
   1. The "Advanced Node Yield Rate" KPI card immediately flashes green.
