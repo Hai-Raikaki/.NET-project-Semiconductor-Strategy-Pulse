@@ -6,7 +6,7 @@ Welcome to my portfolio project! I built **Semiconductor Strategy Pulse** to pus
 
 This application acts as a real-time monitoring center for semiconductor supply chains. It simulates live telemetry inputs (like chip yield rates and order backlogs) and stock price tickers, pushing them to a custom cyberpunk-themed dashboard without page refreshes.
 
-Software tools: Visual Studio 2016, PgAdmin4 (PostgreSQL)
+Software tools: Visual Studio 2026, PgAdmin4 (PostgreSQL)
 
 Duration: May 2026 to June 2026
 
