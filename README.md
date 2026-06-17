@@ -42,7 +42,7 @@ By designing and coding this system from scratch, I successfully mastered the fo
 I structured the application with a decoupled pipeline to ensure low-latency inputs and highly-reactive updates:
 
 1. **The Telemetry Ingestion Flow**: 
-   An authorized operator or IoT device submits a telemetry point (e.g., Yield Rate = 95.2%) to `/api/pulse/ingest`. The API controller validates the secure cookie token, writes the data point immediately to a thread-safe, bounded memory channel queue, and returns a `202 Accepted` response. This decouples incoming web traffic from heavy database persistence.
+   An authorized operator or IoT device submits a telemetry point to `/api/pulse/ingest`. The API controller validates the secure cookie token, writes the data point immediately to a thread-safe, bounded memory channel queue, and returns a `202 Accepted` response. This decouples incoming web traffic from heavy database persistence.
 2. **The Batch Processing Worker**: 
    A hosted background service (`BackgroundProcessor`) monitors the channel queue. It retrieves incoming items and pools them. When the pool hits 1,000 items or 1 second passes, the worker creates a scoped database context, batch-saves the raw points to PostgreSQL, and triggers statistical recalculations.
 3. **The Analytics & Recalculation Engine**: 
