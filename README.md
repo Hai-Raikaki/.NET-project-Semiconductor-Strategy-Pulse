@@ -398,7 +398,7 @@ Here is a detailed breakdown of the files I wrote, explaining their specific res
 - You can import this JSON file into **Postman**, **Swagger Editor**, or **Scalar** to explore and test the RESTful API endpoints.
 
 ### 4. Verification Sequence
-- **Login Verification**: Click **Sign In** and login with email `admin@pulse.com` and password `Admin123` password. Verify the Ingestion status bar turns green (**AUTHORIZED**).
+- **Login Verification**: Click **Sign In** and login with email and password. Verify the Ingestion status bar turns green (**AUTHORIZED**).
 
 - **Ingestion & Streaming Verification**: Select *Yield Rate*, enter value `94.5`, and click **POST TELEMETRY POINT**. Observe:
   1. The "Advanced Node Yield Rate" KPI card immediately flashes green.
