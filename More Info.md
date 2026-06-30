@@ -58,3 +58,46 @@ Even though the raw units are different:
 * **SOX (3,500.00 Points)** = Whole-industry performance benchmark.
 
 They are unified on the dashboard by their **Percentage Change Rate (\%)** (e.g., `+2.4%`, `-1.5%`). The sparkline graphs and neon indicators show their relative momentum, allowing executives to immediately see if individual leaders (Nvidia/TSMC) are outperforming or underperforming the overall semiconductor sector (SOX) in real time.
+
+---
+
+### 1. Where **ASP.NET Core** is used:
+ASP.NET Core acts as the foundational framework orchestrating routing, HTTP request pipelines, middleware, dependency injection, and security.
+
+* **Entry point and Middleware pipeline**:
+  In [Program.cs](/Project1/Program.cs):
+  - **Host Initialization** (Line 25): `var builder = WebApplication.CreateBuilder(args);` initializes the ASP.NET Core web server.
+  - **Controllers Mapping** (Line 40 & 231): `builder.Services.AddControllers();` registers the MVC controller services, and `app.MapControllers();` maps route endpoints to controllers.
+  - **HTTP Request Pipeline** (Lines 214-232): Configures native ASP.NET Core middlewares such as `app.UseStaticFiles()` (serving static frontend assets from `wwwroot`), `app.UseAuthentication()`, `app.UseAuthorization()`, and `app.UseRateLimiter()`.
+* **ASP.NET Core Identity & JWT Authentication**:
+  - Registered in [Program.cs](/Project1/Program.cs#L109-L161) using `builder.Services.AddIdentity<AppUser, IdentityRole<Guid>>()` to manage database-backed users and roles.
+  - Configures `AddJwtBearer()` to hook authentication events for reading JWTs from HttpOnly cookies instead of the request header.
+
+---
+
+### 2. Where the **RESTful API** is implemented:
+The RESTful endpoints are built using ASP.NET Core MVC controllers returning JSON payloads under standard HTTP verbs (GET, POST). They are located in the `/Controllers` directory:
+
+#### **[PulseController.cs](/Project1/Controllers/PulseController.cs)**:
+Exposes telemetry and data state APIs:
+* **Class Configuration** (Lines 16-18):
+  - `[ApiController]` enables automatic model validation.
+  - `[Route("api/[controller]")]` maps the base URL prefix for this controller to `/api/pulse`.
+  - Inherits from `ControllerBase` (the standard base class for API controllers without View support).
+* **GET `/api/pulse/metrics`** (Line 35): Retrieves the current computed telemetry statistics from the database or Redis cache.
+* **POST `/api/pulse/ingest`** (Around Line 53): 
+  - Restricts access via role-based authorization: `[Authorize(Roles = "IoTDevice,Admin")]`.
+  - Validates the incoming payload and returns a standard RESTful HTTP status code: `202 Accepted` (`Accepted(new { ... })`).
+* **GET `/api/pulse/stream`** (Around Line 120): Initiates a persistent connection that streams data points to clients using Server-Sent Events (SSE).
+
+#### **[AuthController.cs](Project1/Controllers/AuthController.cs)**:
+Exposes authentication RESTful resources under `/api/auth`:
+* **POST `/api/auth/register`**: Validates registration DTOs and creates new accounts in PostgreSQL.
+* **POST `/api/auth/login`**: Verifies login payloads and appends secure HTTP-Only cookies (`access_token`, `refresh_token`) to the response.
+* **POST `/api/auth/logout`**: Clears the authentication cookies.
+* **POST `/api/auth/refresh-token`**: Executes refresh token validation and rotation logic.
+* **GET `/api/auth/me`**: Fetches the authenticated user profile based on the cookie context.
+
+#### **[MarketController.cs](/Project1/Controllers/MarketController.cs)**:
+Exposes stock history RESTful resource under `/api/market`:
+* **GET `/api/market/history`**: Returns the last 20 ticks of mock market stock prices.
